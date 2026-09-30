@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f5f7fb;
+
+            color: #172033;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 255px;
+
+            height: 100vh;
+
+            background:
+                    linear-gradient(
+                            180deg,
+                            #07152f 0%,
+                            #0b1f42 55%,
+                            #0d2854 100%
+                    );
+
+            color: white;
+
+            z-index: 1000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            box-shadow:
+                    8px 0 30px rgba(15,23,42,0.10);
+
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .sidebar-brand {
+
+            height: 75px;
+
+            padding: 0 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            border-bottom:
+                    1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .brand-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #6366f1
+                    );
+
+            box-shadow:
+                    0 8px 20px rgba(59,130,246,0.25);
+
+            font-size: 18px;
+
+        }
+
+        .brand-text {
+
+            line-height: 1.2;
+
+        }
+
+        .brand-name {
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+        }
+
+        .brand-role {
+
+            margin-top: 3px;
+
+            color:
+                    rgba(255,255,255,0.45);
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR MENU
+        ===================================================== */
+
+        .sidebar-menu {
+
+            padding: 25px 14px;
+
+            flex: 1;
+
+        }
+
+        .menu-title {
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            color:
+                    rgba(255,255,255,0.35);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+        }
+
+        .sidebar-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            color:
+                    rgba(255,255,255,0.65);
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            transition: .25s;
+
+        }
+
+        .sidebar-link i {
+
+            width: 19px;
+
+            text-align: center;
+
+            font-size: 15px;
+
+        }
+
+        .sidebar-link:hover {
+
+            color: white;
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            transform: translateX(2px);
+
+        }
+
+        .sidebar-link.active {
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(59,130,246,0.95),
+                            rgba(79,70,229,0.95)
+                    );
+
+            box-shadow:
+                    0 8px 20px rgba(37,99,235,0.20);
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+
+            padding: 15px;
+
+            border-top:
+                    1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .admin-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px;
+
+            margin-bottom: 10px;
+
+            border-radius: 11px;
+
+            background:
+                    rgba(255,255,255,0.05);
+
+        }
+
+        .admin-avatar {
+
+            width: 35px;
+
+            height: 35px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    #2563eb;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+        }
+
+        .admin-name {
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+        .admin-status {
+
+            margin-top: 2px;
+
+            color:
+                    rgba(255,255,255,0.40);
+
+            font-size: 8px;
+
+        }
+
+        .logout-link {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            width: 100%;
+
+            padding: 10px;
+
+            border-radius: 9px;
+
+            color:
+                    #fca5a5;
+
+            background:
+                    rgba(239,68,68,0.08);
+
+            border:
+                    1px solid rgba(239,68,68,0.12);
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            transition: .25s;
+
+        }
+
+        .logout-link:hover {
+
+            color: white;
+
+            background:
+                    #dc2626;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+
+            height: 75px;
+
+            padding: 0 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: white;
+
+            border-bottom:
+                    1px solid #e8edf3;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+        .page-title {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .page-subtitle {
+
+            margin-top: 3px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+        }
+
+        .topbar-admin {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 7px 10px;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            border: 1px solid #eef2f7;
+
+        }
+
+        .topbar-avatar {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #6366f1
+                    );
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+        .topbar-name {
+
+            color: #334155;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+        .topbar-role {
+
+            color: #94a3b8;
+
+            font-size: 8px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding: 32px 35px 50px;
+
+        }
+
+
+        /* =====================================================
+           WELCOME
+        ===================================================== */
+
+        .welcome-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 28px 30px;
+
+            border-radius: 18px;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 90% 20%,
+                            rgba(96,165,250,0.25),
+                            transparent 25%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #0b2147,
+                            #173b75
+                    );
+
+            box-shadow:
+                    0 15px 35px rgba(15,23,42,0.12);
+
+        }
+
+        .welcome-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.08);
+
+            right: -60px;
+
+            top: -70px;
+
+        }
+
+        .welcome-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .welcome-label {
+
+            color:
+                    #93c5fd;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.2px;
+
+            text-transform: uppercase;
+
+        }
+
+        .welcome-title {
+
+            margin-top: 7px;
+
+            margin-bottom: 6px;
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+        }
+
+        .welcome-description {
+
+            max-width: 600px;
+
+            margin: 0;
+
+            color:
+                    rgba(255,255,255,0.65);
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+        ===================================================== */
+
+        .stats {
+
+            margin-top: 25px;
+
+        }
+
+        .stat-card {
+
+            height: 100%;
+
+            padding: 21px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            border:
+                    1px solid #e8edf3;
+
+            box-shadow:
+                    0 8px 25px rgba(15,23,42,0.05);
+
+            transition: .25s;
+
+        }
+
+        .stat-card:hover {
+
+            transform:
+                    translateY(-4px);
+
+            box-shadow:
+                    0 15px 35px rgba(15,23,42,0.08);
+
+        }
+
+        .stat-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+        .stat-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+        }
+
+        .icon-students {
+
+            color: #2563eb;
+
+            background: #eff6ff;
+
+        }
+
+        .icon-books {
+
+            color: #16a34a;
+
+            background: #f0fdf4;
+
+        }
+
+        .icon-materials {
+
+            color: #d97706;
+
+            background: #fffbeb;
+
+        }
+
+        .stat-label {
+
+            margin-top: 17px;
+
+            color: #94a3b8;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .8px;
+
+            text-transform: uppercase;
+
+        }
+
+        .stat-number {
+
+            margin-top: 4px;
+
+            color: #172033;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+        }
+
+        .stat-link {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+        }
+
+        .stat-link:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        /* =====================================================
+           MANAGEMENT
+        ===================================================== */
+
+        .section-title {
+
+            margin-top: 32px;
+
+            margin-bottom: 15px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .management-card {
+
+            height: 100%;
+
+            padding: 23px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            border:
+                    1px solid #e8edf3;
+
+            transition: .25s;
+
+        }
+
+        .management-card:hover {
+
+            transform:
+                    translateY(-3px);
+
+            box-shadow:
+                    0 12px 30px rgba(15,23,42,0.07);
+
+        }
+
+        .management-icon {
+
+            width: 46px;
+
+            height: 46px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .management-title {
+
+            margin: 0;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+        .management-description {
+
+            min-height: 38px;
+
+            margin-top: 7px;
+
+            margin-bottom: 17px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+        }
+
+        .manage-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            transition: .25s;
+
+        }
+
+        .manage-btn:hover {
+
+            transform:
+                    translateY(-2px);
+
+        }
+
+        .student-btn {
+
+            color: #2563eb;
+
+            background: #eff6ff;
+
+        }
+
+        .book-btn {
+
+            color: #15803d;
+
+            background: #f0fdf4;
+
+        }
+
+        .material-btn {
+
+            color: #b45309;
+
+            background: #fffbeb;
+
+        }
+
+
+        /* =====================================================
+           QUICK INFO
+        ===================================================== */
+
+        .info-panel {
+
+            margin-top: 32px;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            border:
+                    1px solid #e8edf3;
+
+        }
+
+        .info-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 15px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+        .info-heading i {
+
+            color: #2563eb;
+
+        }
+
+        .info-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 0;
+
+            border-bottom:
+                    1px solid #f1f5f9;
+
+        }
+
+        .info-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .info-row-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+        .info-row-text {
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           MOBILE TOGGLE
+        ===================================================== */
+
+        .mobile-menu-btn {
+
+            display: none;
+
+            border: none;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 9px;
+
+        }
+
+
+        .sidebar-overlay {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15,23,42,0.45);
+
+            z-index: 999;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+
+                transform:
+                        translateX(-100%);
+
+                transition: .3s;
+
+            }
+
+            .sidebar.show {
+
+                transform:
+                        translateX(0);
+
+            }
+
+            .sidebar-overlay.show {
+
+                display: block;
+
+            }
+
+            .main-content {
+
+                margin-left: 0;
+
+            }
+
+            .mobile-menu-btn {
+
+                display: inline-flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+            }
+
+            .topbar {
+
+                padding: 0 20px;
+
+            }
+
+            .content {
+
+                padding: 25px 20px 40px;
+
+            }
+
+        }
+
+
+        @media (max-width: 575px) {
+
+            .topbar-admin {
+
+                display: none;
+
+            }
+
+            .welcome-card {
+
+                padding: 23px;
+
+            }
+
+            .welcome-title {
+
+                font-size: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar"
+       id="sidebar">
+
+
+    <!-- Brand -->
+
+    <div class="sidebar-brand">
+
+
+        <div class="brand-icon">
+
+            <i class="bi bi-book-half"></i>
+
+        </div>
+
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                CampusShelf
+            </div>
+
+            <div class="brand-role">
+                Administration
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- Menu -->
+
+    <div class="sidebar-menu">
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+
+        <!-- Dashboard -->
+
+        <a th:href="@{/admin/dashboard}"
+           class="sidebar-link active">
+
+            <i class="bi bi-grid-1x2-fill"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <!-- Students -->
+
+        <a th:href="@{/admin/students}"
+           class="sidebar-link">
+
+            <i class="bi bi-people-fill"></i>
+
+            Students
+
+        </a>
+
+
+        <!-- Books -->
+
+        <a th:href="@{/admin/books}"
+           class="sidebar-link">
+
+            <i class="bi bi-book-fill"></i>
+
+            Books
+
+        </a>
+
+
+        <!-- Materials -->
+
+        <a th:href="@{/admin/materials}"
+           class="sidebar-link">
+
+            <i class="bi bi-file-earmark-text-fill"></i>
+
+            Study Materials
+
+        </a>
+
+
+        <div class="menu-title mt-4">
+            System
+        </div>
+
+
+        <!-- Home -->
+
+        <a th:href="@{/}"
+           class="sidebar-link">
+
+            <i class="bi bi-house-fill"></i>
+
+            View Website
+
+        </a>
+
+
+    </div>
+
+
+    <!-- Bottom -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="admin-profile">
+
+
+            <div class="admin-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="admin-name">
+                    Administrator
+                </div>
+
+                <div class="admin-status">
+                    <i class="bi bi-circle-fill text-success me-1"></i>
+                    Online
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <a th:href="@{/admin/login}"
+           class="logout-link">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+<!-- Mobile overlay -->
+
+<div class="sidebar-overlay"
+     id="sidebarOverlay"
+     onclick="closeSidebar()">
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+
+        <div class="d-flex align-items-center gap-3">
+
+
+            <button class="mobile-menu-btn"
+                    onclick="toggleSidebar()">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div>
+
+                <h1 class="page-title">
+                    Admin Dashboard
+                </h1>
+
+                <div class="page-subtitle">
+                    Manage your CampusShelf platform
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="topbar-admin">
+
+
+            <div class="topbar-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="topbar-name">
+                    Administrator
+                </div>
+
+                <div class="topbar-role">
+                    System Admin
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <div class="content">
+
+
+        <!-- Welcome -->
+
+        <section class="welcome-card">
+
+
+            <div class="welcome-content">
+
+
+                <div class="welcome-label">
+
+                    <i class="bi bi-speedometer2 me-1"></i>
+
+                    Administration Panel
+
+                </div>
+
+
+                <h2 class="welcome-title">
+
+                    Welcome back, Admin 👋
+
+                </h2>
+
+
+                <p class="welcome-description">
+
+                    Monitor students, manage shared books,
+                    and organize study materials from one
+                    centralized dashboard.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================= -->
+
+        <div class="row g-4 stats">
+
+
+            <!-- Students -->
+
+            <div class="col-md-4">
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-top">
+
+
+                        <div>
+
+                            <div class="stat-label mt-0">
+                                Total Students
+                            </div>
+
+                            <div class="stat-number"
+                                 th:text="${studentCount}">
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon icon-students">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <a th:href="@{/admin/students}"
+                       class="stat-link">
+
+                        Manage Students
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Books -->
+
+            <div class="col-md-4">
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-top">
+
+
+                        <div>
+
+                            <div class="stat-label mt-0">
+                                Total Books
+                            </div>
+
+                            <div class="stat-number"
+                                 th:text="${bookCount}">
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon icon-books">
+
+                            <i class="bi bi-book-fill"></i>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <a th:href="@{/admin/books}"
+                       class="stat-link">
+
+                        Manage Books
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Materials -->
+
+            <div class="col-md-4">
+
+
+                <div class="stat-card">
+
+
+                    <div class="stat-top">
+
+
+                        <div>
+
+                            <div class="stat-label mt-0">
+                                Study Materials
+                            </div>
+
+                            <div class="stat-number"
+                                 th:text="${materialCount}">
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon icon-materials">
+
+                            <i class="bi bi-file-earmark-text-fill"></i>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <a th:href="@{/admin/materials}"
+                       class="stat-link">
+
+                        Manage Materials
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             MANAGEMENT
+        ================================================= -->
+
+        <h3 class="section-title">
+            Management
+        </h3>
+
+
+        <div class="row g-4">
+
+
+            <!-- Students -->
+
+            <div class="col-lg-4">
+
+
+                <div class="management-card">
+
+
+                    <div class="management-icon icon-students">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+
+                    <h4 class="management-title">
+                        Student Management
+                    </h4>
+
+
+                    <p class="management-description">
+
+                        View registered students and manage
+                        student records in the platform.
+
+                    </p>
+
+
+                    <a th:href="@{/admin/students}"
+                       class="manage-btn student-btn">
+
+                        Manage Students
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Books -->
+
+            <div class="col-lg-4">
+
+
+                <div class="management-card">
+
+
+                    <div class="management-icon icon-books">
+
+                        <i class="bi bi-book-fill"></i>
+
+                    </div>
+
+
+                    <h4 class="management-title">
+                        Book Management
+                    </h4>
+
+
+                    <p class="management-description">
+
+                        Review shared books and remove
+                        unwanted or outdated listings.
+
+                    </p>
+
+
+                    <a th:href="@{/admin/books}"
+                       class="manage-btn book-btn">
+
+                        Manage Books
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Materials -->
+
+            <div class="col-lg-4">
+
+
+                <div class="management-card">
+
+
+                    <div class="management-icon icon-materials">
+
+                        <i class="bi bi-file-earmark-text-fill"></i>
+
+                    </div>
+
+
+                    <h4 class="management-title">
+                        Material Management
+                    </h4>
+
+
+                    <p class="management-description">
+
+                        Manage PDFs, documents and other
+                        academic resources shared by students.
+
+                    </p>
+
+
+                    <a th:href="@{/admin/materials}"
+                       class="manage-btn material-btn">
+
+                        Manage Materials
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK INFO
+        ================================================= -->
+
+        <div class="info-panel">
+
+
+            <div class="info-heading">
+
+                <i class="bi bi-shield-check"></i>
+
+                Administration Overview
+
+            </div>
+
+
+            <div class="info-row">
+
+
+                <div class="info-row-icon">
+
+                    <i class="bi bi-people"></i>
+
+                </div>
+
+
+                <div class="info-row-text">
+
+                    Registered students can share
+                    books and academic resources
+                    through CampusShelf.
+
+                </div>
+
+
+            </div>
+
+
+            <div class="info-row">
+
+
+                <div class="info-row-icon">
+
+                    <i class="bi bi-book"></i>
+
+                </div>
+
+
+                <div class="info-row-text">
+
+                    Books can be reviewed and managed
+                    by the administrator.
+
+                </div>
+
+
+            </div>
+
+
+            <div class="info-row">
+
+
+                <div class="info-row-icon">
+
+                    <i class="bi bi-file-earmark-text"></i>
+
+                </div>
+
+
+                <div class="info-row-text">
+
+                    Study materials provide students
+                    with additional academic resources.
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("show");
+
+        document
+            .getElementById("sidebarOverlay")
+            .classList
+            .toggle("show");
+
+    }
+
+
+    function closeSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .remove("show");
+
+        document
+            .getElementById("sidebarOverlay")
+            .classList
+            .remove("show");
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

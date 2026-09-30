@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Student Dashboard - CampusShelf">
+
+    <title>Dashboard | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f8fafc;
+
+            color: #172033;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            height: 72px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b
+                    );
+
+            box-shadow:
+                    0 8px 30px rgba(15,23,42,0.15);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+        }
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white !important;
+
+            font-weight: 800;
+
+            font-size: 20px;
+
+        }
+
+        .brand-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #6366f1
+                    );
+
+            box-shadow:
+                    0 8px 18px rgba(59,130,246,0.30);
+
+        }
+
+        .welcome-text {
+
+            color: rgba(255,255,255,0.75);
+
+            font-size: 13px;
+
+        }
+
+        .student-name {
+
+            color: white;
+
+            font-weight: 700;
+
+        }
+
+        .profile-avatar {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    rgba(255,255,255,0.12);
+
+            color: white;
+
+            font-weight: 700;
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .dashboard-hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 65px 0 90px;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 10%,
+                            rgba(59,130,246,0.25),
+                            transparent 28%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(99,102,241,0.22),
+                            transparent 28%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b,
+                            #172554
+                    );
+
+            color: white;
+
+        }
+
+        .dashboard-hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.08);
+
+            right: -100px;
+
+            top: -100px;
+
+        }
+
+        .dashboard-hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.06);
+
+            left: -80px;
+
+            bottom: -100px;
+
+        }
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 7px 13px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(255,255,255,0.10);
+
+            border:
+                    1px solid rgba(255,255,255,0.12);
+
+            font-size: 12px;
+
+            color:
+                    rgba(255,255,255,0.80);
+
+            margin-bottom: 18px;
+
+        }
+
+        .hero-badge span {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow:
+                    0 0 10px #60a5fa;
+
+        }
+
+        .hero-title {
+
+            font-size:
+                    clamp(2.4rem, 5vw, 4rem);
+
+            font-weight: 800;
+
+            letter-spacing: -2px;
+
+            line-height: 1.1;
+
+        }
+
+        .gradient-text {
+
+            background:
+                    linear-gradient(
+                            90deg,
+                            #60a5fa,
+                            #a5b4fc
+                    );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .hero-description {
+
+            max-width: 650px;
+
+            margin-top: 18px;
+
+            color:
+                    rgba(255,255,255,0.68);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =====================================================
+           HERO ACTION
+        ===================================================== */
+
+        .hero-actions {
+
+            margin-top: 28px;
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .hero-btn {
+
+            padding: 12px 19px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            transition: 0.3s;
+
+        }
+
+        .hero-btn-primary {
+
+            background: white;
+
+            color: #172033;
+
+        }
+
+        .hero-btn-primary:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 12px 25px rgba(0,0,0,0.20);
+
+            color: #172033;
+
+        }
+
+        .hero-btn-secondary {
+
+            border:
+                    1px solid rgba(255,255,255,0.25);
+
+            color: white;
+
+        }
+
+        .hero-btn-secondary:hover {
+
+            background:
+                    rgba(255,255,255,0.10);
+
+            color: white;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-wrapper {
+
+            margin-top: -45px;
+
+            position: relative;
+
+            z-index: 10;
+
+        }
+
+        .stats-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 28px;
+
+            box-shadow:
+                    0 20px 55px rgba(15,23,42,0.12);
+
+        }
+
+        .stat {
+
+            text-align: center;
+
+            border-right:
+                    1px solid #e5e7eb;
+
+        }
+
+        .stat:last-child {
+
+            border-right: none;
+
+        }
+
+        .stat-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 11px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 18px;
+
+        }
+
+        .stat-number {
+
+            margin-top: 10px;
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .stat-label {
+
+            margin-top: 3px;
+
+            font-size: 12px;
+
+            color: #64748b;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main-content {
+
+            padding:
+                    85px 0;
+
+        }
+
+        .section-label {
+
+            color: #2563eb;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+        }
+
+        .section-title {
+
+            font-size: 34px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-top: 8px;
+
+        }
+
+        .section-description {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* =====================================================
+           RESOURCE CARDS
+        ===================================================== */
+
+        .resource-card {
+
+            height: 100%;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            background: white;
+
+            border:
+                    1px solid #e5e7eb;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition:
+                    transform 0.35s ease,
+                    box-shadow 0.35s ease;
+
+        }
+
+        .resource-card:hover {
+
+            transform:
+                    translateY(-8px);
+
+            box-shadow:
+                    0 20px 45px rgba(15,23,42,0.10);
+
+        }
+
+        .resource-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 22px;
+
+        }
+
+        .books-icon {
+
+            color: #2563eb;
+
+            background: #eff6ff;
+
+        }
+
+        .materials-icon {
+
+            color: #16a34a;
+
+            background: #f0fdf4;
+
+        }
+
+        .share-icon {
+
+            color: #7c3aed;
+
+            background: #f5f3ff;
+
+        }
+
+        .resource-card h4 {
+
+            font-size: 20px;
+
+            font-weight: 750;
+
+        }
+
+        .resource-card p {
+
+            color: #64748b;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+            min-height: 50px;
+
+        }
+
+        .resource-btn {
+
+            margin-top: 12px;
+
+            border-radius: 10px;
+
+            padding: 10px 16px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .quick-section {
+
+            margin-top: 70px;
+
+        }
+
+        .quick-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            transition: 0.3s;
+
+            height: 100%;
+
+        }
+
+        .quick-card:hover {
+
+            border-color: #bfdbfe;
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                    0 12px 30px rgba(15,23,42,0.07);
+
+        }
+
+        .quick-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f1f5f9;
+
+            color: #2563eb;
+
+            font-size: 20px;
+
+            flex-shrink: 0;
+
+        }
+
+        .quick-card h6 {
+
+            margin: 0;
+
+            font-weight: 700;
+
+        }
+
+        .quick-card p {
+
+            margin: 4px 0 0;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile-section {
+
+            margin-top: 75px;
+
+        }
+
+        .profile-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            border: 1px solid #e5e7eb;
+
+            overflow: hidden;
+
+        }
+
+        .profile-header {
+
+            padding: 25px 30px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+        .profile-big-avatar {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 19px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #6366f1
+                    );
+
+        }
+
+        .profile-header h5 {
+
+            margin: 0;
+
+            font-weight: 750;
+
+        }
+
+        .profile-header p {
+
+            margin: 4px 0 0;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+        }
+
+        .profile-body {
+
+            padding: 30px;
+
+        }
+
+        .profile-item {
+
+            padding: 18px;
+
+            border-radius: 13px;
+
+            background: #f8fafc;
+
+            height: 100%;
+
+        }
+
+        .profile-label {
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            font-weight: 700;
+
+        }
+
+        .profile-value {
+
+            margin-top: 6px;
+
+            font-weight: 600;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            margin-top: 30px;
+
+            background: #0b1120;
+
+            color: #64748b;
+
+        }
+
+        .footer-main {
+
+            padding: 45px 0;
+
+        }
+
+        .footer-brand {
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 18px;
+
+        }
+
+        .footer-description {
+
+            margin-top: 10px;
+
+            max-width: 400px;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+        .footer-links {
+
+            display: flex;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+
+        }
+
+        .footer-links a {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            transition: 0.3s;
+
+        }
+
+        .footer-links a:hover {
+
+            color: #60a5fa;
+
+        }
+
+        .footer-bottom {
+
+            border-top:
+                    1px solid #1e293b;
+
+            padding: 18px 0;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           ANIMATION
+        ===================================================== */
+
+        .animate {
+
+            animation:
+                    fadeUp 0.7s ease both;
+
+        }
+
+        .delay-one {
+
+            animation-delay: 0.15s;
+
+        }
+
+        .delay-two {
+
+            animation-delay: 0.30s;
+
+        }
+
+        .delay-three {
+
+            animation-delay: 0.45s;
+
+        }
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(25px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 767px) {
+
+            .navbar {
+
+                height: auto;
+
+                padding: 12px 0;
+
+            }
+
+            .welcome-text {
+
+                display: none;
+
+            }
+
+            .dashboard-hero {
+
+                padding:
+                        50px 0 75px;
+
+            }
+
+            .hero-title {
+
+                font-size: 2.5rem;
+
+            }
+
+            .stats {
+
+                margin-top: -30px;
+
+            }
+
+            .stat {
+
+                border-right: none;
+
+                margin-bottom: 22px;
+
+            }
+
+            .stat:last-child {
+
+                margin-bottom: 0;
+
+            }
+
+            .main-content {
+
+                padding:
+                        65px 0;
+
+            }
+
+            .section-title {
+
+                font-size: 29px;
+
+            }
+
+            .footer-links {
+
+                justify-content: flex-start;
+
+                margin-top: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar navbar-dark">
+
+    <div class="container">
+
+
+        <!-- Brand -->
+
+        <a class="brand"
+           th:href="@{'/students/dashboard?studentId=' + ${student.id}}">
+
+            <div class="brand-icon">
+
+                <i class="bi bi-book-half"></i>
+
+            </div>
+
+            CampusShelf
+
+        </a>
+
+
+        <!-- User -->
+
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="text-end">
+
+                <div class="welcome-text">
+                    Welcome back
+                </div>
+
+                <div class="student-name"
+                     th:text="${student.name}">
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-avatar">
+
+                <span
+                        th:text="${#strings.substring(student.name,0,1).toUpperCase()}">
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="dashboard-hero">
+
+    <div class="container">
+
+        <div class="hero-content animate">
+
+
+            <div class="hero-badge">
+
+                <span></span>
+
+                Student Dashboard
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Welcome back,
+
+                <br>
+
+                <span class="gradient-text"
+                      th:text="${student.name}">
+
+                </span>
+
+                👋
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Discover books, study materials and
+                academic resources shared by students
+                across your college community.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+
+                <a th:href="@{/books}"
+                   class="hero-btn hero-btn-primary">
+
+                    <i class="bi bi-book"></i>
+
+                    Explore Books
+
+                </a>
+
+
+                <a th:href="@{/materials}"
+                   class="hero-btn hero-btn-secondary">
+
+                    <i class="bi bi-file-earmark-text"></i>
+
+                    Study Materials
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats-wrapper">
+
+    <div class="container">
+
+        <div class="stats-card">
+
+
+            <div class="row">
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+                        <div class="stat-number">
+                            Books
+                        </div>
+
+                        <div class="stat-label">
+                            Browse resources
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-file-earmark-text"></i>
+
+                        </div>
+
+                        <div class="stat-number">
+                            Notes
+                        </div>
+
+                        <div class="stat-label">
+                            Study materials
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-cloud-arrow-up"></i>
+
+                        </div>
+
+                        <div class="stat-number">
+                            Share
+                        </div>
+
+                        <div class="stat-label">
+                            Upload resources
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        <div class="stat-number">
+                            Community
+                        </div>
+
+                        <div class="stat-label">
+                            Learn together
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+    <div class="container">
+
+
+        <!-- Section Header -->
+
+        <div class="animate">
+
+            <div class="section-label">
+                CAMPUSSHELF
+            </div>
+
+            <h2 class="section-title">
+                What would you like to do?
+            </h2>
+
+            <p class="section-description">
+
+                Explore academic resources or share
+                something useful with your juniors.
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             RESOURCE CARDS
+        ================================================= -->
+
+        <div class="row g-4 mt-3">
+
+
+            <!-- Books -->
+
+            <div class="col-md-6 col-lg-4 animate delay-one">
+
+                <div class="resource-card">
+
+
+                    <div class="resource-icon books-icon">
+
+                        <i class="bi bi-book"></i>
+
+                    </div>
+
+
+                    <h4>
+                        Books
+                    </h4>
+
+
+                    <p>
+
+                        Browse affordable textbooks and
+                        reference books shared by seniors
+                        and other students.
+
+                    </p>
+
+
+                    <a th:href="@{/books}"
+                       class="btn btn-primary resource-btn">
+
+                        Browse Books
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Materials -->
+
+            <div class="col-md-6 col-lg-4 animate delay-two">
+
+                <div class="resource-card">
+
+
+                    <div class="resource-icon materials-icon">
+
+                        <i class="bi bi-file-earmark-text"></i>
+
+                    </div>
+
+
+                    <h4>
+                        Study Materials
+                    </h4>
+
+
+                    <p>
+
+                        Find notes, PDFs, previous question
+                        papers, lab manuals and other
+                        academic resources.
+
+                    </p>
+
+
+                    <a th:href="@{/materials}"
+                       class="btn btn-success resource-btn">
+
+                        Browse Materials
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Share -->
+
+            <div class="col-md-6 col-lg-4 animate delay-three">
+
+                <div class="resource-card">
+
+
+                    <div class="resource-icon share-icon">
+
+                        <i class="bi bi-cloud-arrow-up"></i>
+
+                    </div>
+
+
+                    <h4>
+                        Share Resources
+                    </h4>
+
+
+                    <p>
+
+                        Help juniors by sharing your used
+                        books and useful study materials.
+
+                    </p>
+
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+
+                        <a th:href="@{'/books/add?studentId=' + ${student.id}}"
+                           class="btn btn-primary resource-btn">
+
+                            <i class="bi bi-book"></i>
+
+                            Add Book
+
+                        </a>
+
+
+                        <a th:href="@{'/materials/add?studentId=' + ${student.id}}"
+                           class="btn btn-success resource-btn">
+
+                            <i class="bi bi-upload"></i>
+
+                            Add Material
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================= -->
+
+        <div class="quick-section">
+
+
+            <div class="section-label">
+                QUICK ACTIONS
+            </div>
+
+            <h2 class="section-title">
+                Get things done faster
+            </h2>
+
+
+            <div class="row g-3 mt-2">
+
+
+                <!-- Search Books -->
+
+                <div class="col-md-4">
+
+                    <a th:href="@{/books}"
+                       class="text-decoration-none text-dark">
+
+                        <div class="quick-card">
+
+                            <div class="quick-icon">
+
+                                <i class="bi bi-search"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Find a Book
+                                </h6>
+
+                                <p>
+                                    Search by title, department
+                                    or semester.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Materials -->
+
+                <div class="col-md-4">
+
+                    <a th:href="@{/materials}"
+                       class="text-decoration-none text-dark">
+
+                        <div class="quick-card">
+
+                            <div class="quick-icon">
+
+                                <i class="bi bi-file-earmark-text"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Find Materials
+                                </h6>
+
+                                <p>
+                                    Discover useful academic
+                                    resources.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Upload -->
+
+                <div class="col-md-4">
+
+                    <a th:href="@{'/books/add?studentId=' + ${student.id}}"
+                       class="text-decoration-none text-dark">
+
+                        <div class="quick-card">
+
+                            <div class="quick-icon">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Share a Book
+                                </h6>
+
+                                <p>
+                                    Upload a book for other
+                                    students.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PROFILE
+        ================================================= -->
+
+        <div class="profile-section">
+
+
+            <div class="section-label">
+                ACCOUNT
+            </div>
+
+            <h2 class="section-title">
+                My Profile
+            </h2>
+
+
+            <div class="profile-card mt-4">
+
+
+                <!-- Profile Header -->
+
+                <div class="profile-header">
+
+
+                    <div class="profile-big-avatar">
+
+                        <span
+                                th:text="${#strings.substring(student.name,0,1).toUpperCase()}">
+
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <h5 th:text="${student.name}">
+
+                        </h5>
+
+                        <p th:text="${student.department + ' • ' + student.year}">
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Profile Body -->
+
+                <div class="profile-body">
+
+
+                    <div class="row g-3">
+
+
+                        <!-- Name -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Full Name
+                                </div>
+
+                                <div class="profile-value"
+                                     th:text="${student.name}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Email
+                                </div>
+
+                                <div class="profile-value"
+                                     th:text="${student.email}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Phone -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Phone
+                                </div>
+
+                                <div class="profile-value"
+                                     th:text="${student.phone}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Department -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Department
+                                </div>
+
+                                <div class="profile-value"
+                                     th:text="${student.department}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Year -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Academic Year
+                                </div>
+
+                                <div class="profile-value"
+                                     th:text="${student.year}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Account -->
+
+                        <div class="col-md-4">
+
+                            <div class="profile-item">
+
+                                <div class="profile-label">
+                                    Account Status
+                                </div>
+
+                                <div class="profile-value">
+
+                                    <span class="badge bg-success">
+
+                                        Active
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-main">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+
+                <div class="col-md-6">
+
+                    <div class="footer-brand">
+
+                        <i class="bi bi-book-half me-2"></i>
+
+                        CampusShelf
+
+                    </div>
+
+                    <div class="footer-description">
+
+                        Learn, share and grow together with
+                        your college community.
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="footer-links">
+
+                        <a th:href="@{/books}">
+                            Books
+                        </a>
+
+                        <a th:href="@{/materials}">
+                            Materials
+                        </a>
+
+                        <a th:href="@{'/books/add?studentId=' + ${student.id}}">
+                            Share Book
+                        </a>
+
+                        <a th:href="@{'/materials/add?studentId=' + ${student.id}}">
+                            Share Material
+                        </a>
+
+                        <a th:href="@{/}">
+                            Home
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+
+                <span>
+                    © 2026 CampusShelf. All rights reserved.
+                </span>
+
+                <span>
+                    Built for students.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+</html>

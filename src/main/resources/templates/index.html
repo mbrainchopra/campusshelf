@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="CampusShelf - College Books and Study Materials Sharing Platform">
+
+    <title>CampusShelf | Learn. Share. Grow.</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #172033;
+            background: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            padding: 18px 0;
+            transition: all 0.3s ease;
+            background: rgba(10, 20, 40, 0.92) !important;
+            backdrop-filter: blur(15px);
+        }
+
+        .navbar.scrolled {
+            padding: 12px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #6366f1
+            );
+            color: white;
+            font-size: 22px;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .brand-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.78) !important;
+            font-weight: 500;
+            margin: 0 7px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .btn-login {
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+            padding: 9px 18px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: #172033;
+        }
+
+        .btn-register {
+            background: linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #6366f1
+            );
+            color: white;
+            padding: 10px 19px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(59,130,246,0.25);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 12px 25px rgba(59,130,246,0.35);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 100vh;
+            padding: 150px 0 100px;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                    radial-gradient(
+                            circle at 15% 20%,
+                            rgba(59,130,246,0.30),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 85% 70%,
+                            rgba(99,102,241,0.25),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b 55%,
+                            #172554
+                    );
+
+            color: white;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+            margin-bottom: 25px;
+            animation: fadeDown 0.8s ease;
+        }
+
+        .hero-badge span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #60a5fa;
+            box-shadow: 0 0 12px #60a5fa;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5.4rem);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -3px;
+            max-width: 800px;
+            animation: fadeUp 0.9s ease;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a5b4fc,
+                    #c4b5fd
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            margin-top: 25px;
+            max-width: 650px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.72);
+            animation: fadeUp 1s ease;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+            animation: fadeUp 1.1s ease;
+        }
+
+        .hero-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            background: white;
+            color: #172033;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+            color: #172033;
+        }
+
+        .hero-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 13px 23px;
+            margin-left: 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .hero-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+
+        /* =====================================================
+           FLOATING BOOK VISUAL
+        ===================================================== */
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-scene {
+            position: relative;
+            width: 330px;
+            height: 330px;
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        .book-main {
+            position: absolute;
+            width: 210px;
+            height: 270px;
+            left: 60px;
+            top: 30px;
+            border-radius: 8px 18px 18px 8px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #4f46e5
+                    );
+
+            box-shadow:
+                    25px 25px 50px rgba(0,0,0,0.35),
+                    inset -8px 0 rgba(0,0,0,0.12);
+
+            transform: rotate(-8deg);
+        }
+
+        .book-main::before {
+            content: "CampusShelf";
+            position: absolute;
+            top: 75px;
+            left: 25px;
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            transform: rotate(0deg);
+        }
+
+        .book-main::after {
+            content: "LEARN • SHARE • GROW";
+            position: absolute;
+            bottom: 55px;
+            left: 25px;
+            color: rgba(255,255,255,0.7);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .book-small {
+            position: absolute;
+            width: 150px;
+            height: 190px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 6px 12px 12px 6px;
+            background: linear-gradient(
+                    135deg,
+                    #818cf8,
+                    #7c3aed
+            );
+            box-shadow: 15px 18px 35px rgba(0,0,0,0.25);
+            transform: rotate(13deg);
+        }
+
+        .book-small::before {
+            content: "NOTES";
+            position: absolute;
+            top: 65px;
+            left: 25px;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .floating-card {
+            position: absolute;
+            padding: 15px 18px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.16);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.18);
+            color: white;
+        }
+
+        .card-one {
+            top: 30px;
+            right: 10px;
+            animation: floatingSmall 4s ease-in-out infinite;
+        }
+
+        .card-two {
+            bottom: 35px;
+            left: 0;
+            animation: floatingSmall 4.5s ease-in-out infinite reverse;
+        }
+
+        .floating-card i {
+            color: #93c5fd;
+            margin-right: 7px;
+        }
+
+
+        /* =====================================================
+           BACKGROUND SHAPES
+        ===================================================== */
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.15;
+        }
+
+        .shape-one {
+            width: 220px;
+            height: 220px;
+            background: #60a5fa;
+            top: 10%;
+            left: -100px;
+            animation: moveShape 12s infinite alternate;
+        }
+
+        .shape-two {
+            width: 160px;
+            height: 160px;
+            background: #a78bfa;
+            right: 5%;
+            top: 15%;
+            animation: moveShape 10s infinite alternate-reverse;
+        }
+
+        .shape-three {
+            width: 250px;
+            height: 250px;
+            background: #818cf8;
+            right: -100px;
+            bottom: -80px;
+            animation: moveShape 14s infinite alternate;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            margin-top: -55px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(15,23,42,0.12);
+        }
+
+        .stat-item {
+            text-align: center;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section {
+            padding: 110px 0;
+        }
+
+        .section-label {
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .section-description {
+            color: #64748b;
+            max-width: 650px;
+            margin: 15px auto 0;
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           FEATURE CARDS
+        ===================================================== */
+
+        .feature-card {
+            height: 100%;
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            background: white;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #dbeafe;
+            right: -40px;
+            top: -40px;
+            transition: 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #bfdbfe;
+            box-shadow: 0 20px 45px rgba(15,23,42,0.10);
+        }
+
+        .feature-card:hover::before {
+            transform: scale(2.5);
+            opacity: 0.5;
+        }
+
+        .feature-icon {
+            position: relative;
+            z-index: 1;
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            color: #2563eb;
+            background: #eff6ff;
+            margin-bottom: 25px;
+        }
+
+        .feature-card h4 {
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-top: 12px;
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-weight: 600;
+            color: #2563eb;
+            transition: 0.3s;
+        }
+
+        .feature-link:hover {
+            gap: 13px;
+        }
+
+
+        /* =====================================================
+           HOW IT WORKS
+        ===================================================== */
+
+        .process-section {
+            background: #f1f5f9;
+        }
+
+        .process-card {
+            text-align: center;
+            position: relative;
+            padding: 25px;
+        }
+
+        .process-number {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #6366f1
+            );
+            color: white;
+            font-size: 22px;
+            font-weight: 800;
+            box-shadow: 0 10px 25px rgba(37,99,235,0.25);
+        }
+
+        .process-card h5 {
+            font-weight: 700;
+        }
+
+        .process-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           CTA
+        ===================================================== */
+
+        .cta {
+            padding: 100px 0;
+        }
+
+        .cta-box {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            padding: 75px 40px;
+            text-align: center;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 20%,
+                            rgba(255,255,255,0.12),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(255,255,255,0.12),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #1d4ed8,
+                            #4338ca
+                    );
+
+            color: white;
+        }
+
+        .cta-box h2 {
+            font-size: 42px;
+            font-weight: 800;
+        }
+
+        .cta-box p {
+            max-width: 600px;
+            margin: 18px auto 30px;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.7;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: #1d4ed8;
+            padding: 14px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            color: #1d4ed8;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #0b1120;
+            color: #94a3b8;
+        }
+
+        .footer-main {
+            padding: 75px 0 50px;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .footer-description {
+            margin-top: 20px;
+            max-width: 350px;
+            line-height: 1.8;
+            color: #64748b;
+        }
+
+        .footer-title {
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #64748b;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #60a5fa;
+            padding-left: 4px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111827;
+            color: #94a3b8;
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1e293b;
+            padding: 22px 0;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           SCROLL ANIMATION
+        ===================================================== */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition:
+                    opacity 0.8s ease,
+                    transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           ANIMATIONS
+        ===================================================== */
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes fadeDown {
+
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(2deg);
+            }
+
+        }
+
+        @keyframes floatingSmall {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+        }
+
+        @keyframes moveShape {
+
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(60px, 40px);
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .hero {
+                padding-top: 130px;
+            }
+
+            .hero-visual {
+                height: 400px;
+                margin-top: 30px;
+            }
+
+            .stat-item {
+                border-right: none;
+                margin-bottom: 20px;
+            }
+
+            .navbar-collapse {
+                padding-top: 20px;
+            }
+
+        }
+
+
+        @media (max-width: 767px) {
+
+            .hero {
+                padding: 120px 0 80px;
+                min-height: auto;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+                letter-spacing: -2px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-buttons a {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+
+            .hero-secondary {
+                margin-left: 0;
+            }
+
+            .hero-visual {
+                transform: scale(0.8);
+                margin-top: 0;
+            }
+
+            .section {
+                padding: 75px 0;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .cta-box {
+                padding: 55px 25px;
+            }
+
+            .cta-box h2 {
+                font-size: 32px;
+            }
+
+            .stats {
+                margin-top: -30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+    <div class="container">
+
+        <a class="navbar-brand d-flex align-items-center gap-2"
+           th:href="@{/}">
+
+            <div class="brand-logo">
+
+                <i class="bi bi-book-half"></i>
+
+            </div>
+
+            <span class="brand-name">
+                CampusShelf
+            </span>
+
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse"
+             id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="#home">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="#features">
+                        Features
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="#how-it-works">
+                        How It Works
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-3">
+
+                    <a class="btn-login"
+                       th:href="@{/students/login}">
+
+                        Login
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+
+                    <a class="btn-register"
+                       th:href="@{/students/register}">
+
+                        Get Started
+                        <i class="bi bi-arrow-right ms-1"></i>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero"
+         id="home">
+
+
+    <!-- Animated Shapes -->
+
+    <div class="shape shape-one"></div>
+
+    <div class="shape shape-two"></div>
+
+    <div class="shape shape-three"></div>
+
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+
+            <!-- Hero Content -->
+
+            <div class="col-lg-7 hero-content">
+
+                <div class="hero-badge">
+
+                    <span></span>
+
+                    Built for Students, Powered by Sharing
+
+                </div>
+
+
+                <h1 class="hero-title">
+
+                    Learn More.
+                    <br>
+
+                    <span class="gradient-text">
+                        Share More.
+                    </span>
+
+                    <br>
+
+                    Grow Together.
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    CampusShelf connects college students with
+                    useful books, notes, previous question papers
+                    and study materials — all in one simple platform.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+                    <a th:href="@{/students/register}"
+                       class="hero-primary">
+
+                        Start Sharing
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+
+                    <a th:href="@{/books}"
+                       class="hero-secondary">
+
+                        <i class="bi bi-book"></i>
+
+                        Explore Books
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Hero Visual -->
+
+            <div class="col-lg-5">
+
+                <div class="hero-visual">
+
+
+                    <div class="book-scene">
+
+                        <div class="book-main"></div>
+
+                        <div class="book-small"></div>
+
+                    </div>
+
+
+                    <div class="floating-card card-one">
+
+                        <i class="bi bi-book"></i>
+
+                        <strong>
+                            Books
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            Learn from seniors
+                        </small>
+
+                    </div>
+
+
+                    <div class="floating-card card-two">
+
+                        <i class="bi bi-file-earmark-text"></i>
+
+                        <strong>
+                            Study Materials
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            Notes & resources
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+    <div class="container">
+
+        <div class="stats-card">
+
+            <div class="row">
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-number">
+                            100+
+                        </div>
+
+                        <div class="stat-label">
+                            Books Shared
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-number">
+                            250+
+                        </div>
+
+                        <div class="stat-label">
+                            Study Materials
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-number">
+                            500+
+                        </div>
+
+                        <div class="stat-label">
+                            Students
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-number">
+                            10+
+                        </div>
+
+                        <div class="stat-label">
+                            Departments
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="section"
+         id="features">
+
+    <div class="container">
+
+
+        <div class="text-center reveal">
+
+            <div class="section-label">
+                PLATFORM FEATURES
+            </div>
+
+            <h2 class="section-title">
+                Everything Students Need
+            </h2>
+
+            <p class="section-description">
+
+                A simple platform designed to make sharing
+                and discovering academic resources easier.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+
+            <!-- Books -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-book"></i>
+
+                    </div>
+
+                    <h4>
+                        Used Books
+                    </h4>
+
+                    <p>
+
+                        Find affordable textbooks and
+                        reference books shared by seniors
+                        from different departments.
+
+                    </p>
+
+                    <a th:href="@{/books}"
+                       class="feature-link">
+
+                        Browse Books
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Materials -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-file-earmark-text"></i>
+
+                    </div>
+
+                    <h4>
+                        Study Materials
+                    </h4>
+
+                    <p>
+
+                        Access notes, previous question
+                        papers, lab manuals and other
+                        useful academic resources.
+
+                    </p>
+
+                    <a th:href="@{/materials}"
+                       class="feature-link">
+
+                        Browse Materials
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Sharing -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-people"></i>
+
+                    </div>
+
+                    <h4>
+                        Knowledge Sharing
+                    </h4>
+
+                    <p>
+
+                        Seniors can share useful resources
+                        with juniors and help build a
+                        stronger academic community.
+
+                    </p>
+
+                    <a th:href="@{/students/register}"
+                       class="feature-link">
+
+                        Start Sharing
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Search -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-search"></i>
+
+                    </div>
+
+                    <h4>
+                        Smart Search
+                    </h4>
+
+                    <p>
+
+                        Quickly find books and materials
+                        using title, department and
+                        semester filters.
+
+                    </p>
+
+                    <a th:href="@{/books}"
+                       class="feature-link">
+
+                        Find Resources
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- File Upload -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-cloud-arrow-up"></i>
+
+                    </div>
+
+                    <h4>
+                        Easy Uploads
+                    </h4>
+
+                    <p>
+
+                        Upload books and academic documents
+                        easily so other students can
+                        discover and use them.
+
+                    </p>
+
+                    <a th:href="@{/students/login}"
+                       class="feature-link">
+
+                        Upload Resources
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Community -->
+
+            <div class="col-md-6 col-lg-4 reveal">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+
+                        <i class="bi bi-mortarboard"></i>
+
+                    </div>
+
+                    <h4>
+                        Student Community
+                    </h4>
+
+                    <p>
+
+                        Create a collaborative environment
+                        where students learn from one
+                        another.
+
+                    </p>
+
+                    <a th:href="@{/students/register}"
+                       class="feature-link">
+
+                        Join Community
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HOW IT WORKS
+===================================================== -->
+
+<section class="section process-section"
+         id="how-it-works">
+
+    <div class="container">
+
+
+        <div class="text-center reveal">
+
+            <div class="section-label">
+                SIMPLE PROCESS
+            </div>
+
+            <h2 class="section-title">
+                How CampusShelf Works
+            </h2>
+
+            <p class="section-description">
+
+                Getting started takes only a few simple steps.
+
+            </p>
+
+        </div>
+
+
+        <div class="row mt-5">
+
+
+            <div class="col-md-4 reveal">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        01
+                    </div>
+
+                    <h5>
+                        Create Your Account
+                    </h5>
+
+                    <p class="mt-3">
+
+                        Register as a college student
+                        and create your CampusShelf account.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 reveal">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        02
+                    </div>
+
+                    <h5>
+                        Find or Share
+                    </h5>
+
+                    <p class="mt-3">
+
+                        Browse available books and materials
+                        or upload your own resources.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 reveal">
+
+                <div class="process-card">
+
+                    <div class="process-number">
+                        03
+                    </div>
+
+                    <h5>
+                        Learn & Grow
+                    </h5>
+
+                    <p class="mt-3">
+
+                        Use shared resources and help
+                        other students succeed.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <div class="cta-box reveal">
+
+            <h2>
+                Ready to Share Your Knowledge?
+            </h2>
+
+            <p>
+
+                Join CampusShelf and help make academic
+                resources easier to discover for everyone.
+
+            </p>
+
+            <a th:href="@{/students/register}"
+               class="cta-btn">
+
+                Create Free Account
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-main">
+
+        <div class="container">
+
+            <div class="row g-5">
+
+
+                <!-- Brand -->
+
+                <div class="col-lg-5">
+
+                    <div class="footer-brand">
+
+                        <div class="brand-logo">
+
+                            <i class="bi bi-book-half"></i>
+
+                        </div>
+
+                        CampusShelf
+
+                    </div>
+
+
+                    <p class="footer-description">
+
+                        A student-focused platform for sharing
+                        college books, notes, previous question
+                        papers and useful academic resources.
+
+                    </p>
+
+
+                    <div class="social-links">
+
+                        <a href="#"
+                           class="social-link">
+
+                            <i class="bi bi-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link">
+
+                            <i class="bi bi-linkedin"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link">
+
+                            <i class="bi bi-github"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link">
+
+                            <i class="bi bi-envelope"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Platform -->
+
+                <div class="col-6 col-lg-2">
+
+                    <h6 class="footer-title">
+                        Platform
+                    </h6>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a th:href="@{/books}">
+                                Browse Books
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/materials}">
+                                Study Materials
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/students/register}">
+                                Register
+                            </a>
+                        </li>
+
+                        <li>
+                            <a th:href="@{/students/login}">
+                                Student Login
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Resources -->
+
+                <div class="col-6 col-lg-2">
+
+                    <h6 class="footer-title">
+                        Resources
+                    </h6>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a href="#features">
+                                Features
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#how-it-works">
+                                How It Works
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#home">
+                                About CampusShelf
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- Account -->
+
+                <div class="col-12 col-lg-3">
+
+                    <h6 class="footer-title">
+                        Account
+                    </h6>
+
+                    <ul class="footer-links">
+
+                        <li>
+
+                            <a th:href="@{/students/login}">
+
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                                Student Login
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a th:href="@{/students/register}">
+
+                                <i class="bi bi-person-plus me-2"></i>
+
+                                Create Account
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a th:href="@{/admin/login}">
+
+                                <i class="bi bi-shield-lock me-2"></i>
+
+                                Admin Portal
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Footer Bottom -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        © 2026 CampusShelf.
+                        All rights reserved.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6 text-md-end">
+
+                    <p>
+
+                        Built for students.
+                        Powered by knowledge.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</footer>
+
+
+<!-- =====================================================
+     BOOTSTRAP
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- =====================================================
+     CUSTOM ANIMATION SCRIPT
+===================================================== -->
+
+<script>
+
+    /*
+     * Navbar shadow when scrolling
+     */
+
+    const navbar = document.querySelector(".navbar");
+
+    window.addEventListener("scroll", function () {
+
+        if (window.scrollY > 50) {
+
+            navbar.classList.add("scrolled");
+
+        } else {
+
+            navbar.classList.remove("scrolled");
+
+        }
+
+    });
+
+
+    /*
+     * Scroll reveal animation
+     */
+
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
+
+    const observer =
+        new IntersectionObserver(
+
+            function (entries) {
+
+                entries.forEach(function (entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("active");
+
+                    }
+
+                });
+
+            },
+
+            {
+                threshold: 0.12
+            }
+
+        );
+
+
+    revealElements.forEach(function (element) {
+
+        observer.observe(element);
+
+    });
+
+
+    /*
+     * Close mobile navbar after clicking a link
+     */
+
+    const navLinks =
+        document.querySelectorAll(".navbar .nav-link");
+
+
+    const navbarMenu =
+        document.querySelector("#navbarMenu");
+
+
+    navLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            if (window.innerWidth < 992) {
+
+                const collapse =
+                    bootstrap.Collapse
+                        .getInstance(navbarMenu);
+
+                if (collapse) {
+
+                    collapse.hide();
+
+                }
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

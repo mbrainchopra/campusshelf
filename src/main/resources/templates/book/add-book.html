@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Add a Book - CampusShelf">
+
+    <title>Add Book | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f8fafc;
+
+            color: #172033;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            min-height: 72px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b
+                    );
+
+            box-shadow:
+                    0 8px 30px rgba(15,23,42,0.15);
+
+        }
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white !important;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+        .brand-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #6366f1
+                    );
+
+            box-shadow:
+                    0 8px 18px rgba(59,130,246,0.30);
+
+        }
+
+        .nav-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            border:
+                    1px solid rgba(255,255,255,0.14);
+
+            transition: .25s;
+
+        }
+
+        .nav-btn:hover {
+
+            color: white;
+
+            background:
+                    rgba(255,255,255,0.16);
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 55px 0 105px;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 20%,
+                            rgba(59,130,246,0.25),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(99,102,241,0.22),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b,
+                            #172554
+                    );
+
+        }
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 330px;
+
+            height: 330px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.07);
+
+            right: -150px;
+
+            top: -170px;
+
+        }
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 240px;
+
+            height: 240px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.06);
+
+            left: -120px;
+
+            bottom: -140px;
+
+        }
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 7px 13px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(255,255,255,0.09);
+
+            border:
+                    1px solid rgba(255,255,255,0.13);
+
+            color:
+                    rgba(255,255,255,0.80);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+        .hero-badge i {
+
+            color: #60a5fa;
+
+        }
+
+        .hero h1 {
+
+            margin-top: 18px;
+
+            font-size:
+                    clamp(2rem, 4vw, 3rem);
+
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+
+        }
+
+        .hero p {
+
+            max-width: 600px;
+
+            margin-top: 10px;
+
+            color:
+                    rgba(255,255,255,0.68);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           FORM WRAPPER
+        ===================================================== */
+
+        .form-wrapper {
+
+            margin-top: -65px;
+
+            position: relative;
+
+            z-index: 10;
+
+            padding-bottom: 80px;
+
+        }
+
+        .form-card {
+
+            background: white;
+
+            border:
+                    1px solid #e5e7eb;
+
+            border-radius: 22px;
+
+            overflow: hidden;
+
+            box-shadow:
+                    0 22px 60px rgba(15,23,42,0.12);
+
+        }
+
+        .form-content {
+
+            padding: 35px;
+
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .section-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    #eff6ff;
+
+            color:
+                    #2563eb;
+
+            font-size: 17px;
+
+        }
+
+        .section-title {
+
+            margin: 0;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .section-subtitle {
+
+            margin: 3px 0 0;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-label {
+
+            margin-bottom: 7px;
+
+            color: #334155;
+
+            font-size: 11px;
+
+            font-weight: 750;
+
+        }
+
+        .required {
+
+            color: #ef4444;
+
+        }
+
+        .form-control,
+        .form-select {
+
+            min-height: 46px;
+
+            padding:
+                    10px 13px;
+
+            border-radius: 10px;
+
+            border:
+                    1px solid #dbe2ea;
+
+            color: #334155;
+
+            background: white;
+
+            font-size: 12px;
+
+            box-shadow: none;
+
+            transition: .2s;
+
+        }
+
+        .form-control::placeholder {
+
+            color: #a8b1bf;
+
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color:
+                    #60a5fa;
+
+            box-shadow:
+                    0 0 0 4px rgba(59,130,246,0.10);
+
+        }
+
+        textarea.form-control {
+
+            min-height: 125px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           PRICE / CONDITION
+        ===================================================== */
+
+        .input-group-text {
+
+            border:
+                    1px solid #dbe2ea;
+
+            border-right: none;
+
+            background:
+                    #f8fafc;
+
+            color:
+                    #64748b;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+        .input-group .form-control {
+
+            border-left: none;
+
+        }
+
+        .input-group:focus-within .input-group-text {
+
+            border-color: #60a5fa;
+
+        }
+
+
+        /* =====================================================
+           IMAGE UPLOAD
+        ===================================================== */
+
+        .upload-area {
+
+            position: relative;
+
+            min-height: 230px;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            border:
+                    2px dashed #cbd5e1;
+
+            background:
+                    #f8fafc;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            transition: .25s;
+
+            cursor: pointer;
+
+        }
+
+        .upload-area:hover {
+
+            border-color:
+                    #60a5fa;
+
+            background:
+                    #f8fbff;
+
+        }
+
+        .upload-area.dragover {
+
+            border-color:
+                    #2563eb;
+
+            background:
+                    #eff6ff;
+
+        }
+
+        .upload-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    #eff6ff;
+
+            color:
+                    #2563eb;
+
+            font-size: 24px;
+
+            margin-bottom: 13px;
+
+        }
+
+        .upload-title {
+
+            color: #334155;
+
+            font-size: 13px;
+
+            font-weight: 750;
+
+        }
+
+        .upload-text {
+
+            margin-top: 5px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+        }
+
+        .upload-button {
+
+            margin-top: 13px;
+
+            padding: 8px 14px;
+
+            border-radius: 9px;
+
+            background:
+                    white;
+
+            border:
+                    1px solid #dbe2ea;
+
+            color:
+                    #2563eb;
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+        }
+
+        #bookImage {
+
+            display: none;
+
+        }
+
+
+        /* =====================================================
+           IMAGE PREVIEW
+        ===================================================== */
+
+        .preview-wrapper {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background:
+                    #f8fafc;
+
+            border:
+                    1px solid #e5e7eb;
+
+        }
+
+        .preview-title {
+
+            margin-bottom: 10px;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .8px;
+
+        }
+
+        .image-preview {
+
+            width: 180px;
+
+            height: 220px;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 11px;
+
+            border:
+                    1px solid #dbe2ea;
+
+            box-shadow:
+                    0 8px 25px rgba(15,23,42,0.10);
+
+        }
+
+        .file-name {
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            word-break: break-all;
+
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error-alert {
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                    #fef2f2;
+
+            color:
+                    #b91c1c;
+
+            font-size: 11px;
+
+            padding: 13px 15px;
+
+        }
+
+
+        /* =====================================================
+           TIPS
+        ===================================================== */
+
+        .tips-card {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eff6ff,
+                            #f5f3ff
+                    );
+
+            border:
+                    1px solid #dbeafe;
+
+        }
+
+        .tips-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #1e3a8a;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+
+        }
+
+        .tips-title i {
+
+            color: #2563eb;
+
+        }
+
+        .tips-list {
+
+            margin: 0;
+
+            padding-left: 18px;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .form-actions {
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top:
+                    1px solid #e5e7eb;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+        }
+
+        .action-btn {
+
+            min-height: 45px;
+
+            padding:
+                    0 18px;
+
+            border-radius: 10px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: 11px;
+
+            font-weight: 750;
+
+            transition: .25s;
+
+        }
+
+        .action-btn:hover {
+
+            transform:
+                    translateY(-2px);
+
+        }
+
+        .btn-primary {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #4f46e5
+                    );
+
+            border: none;
+
+            box-shadow:
+                    0 8px 20px rgba(37,99,235,0.20);
+
+        }
+
+        .btn-primary:hover {
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #1d4ed8,
+                            #4338ca
+                    );
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            background: #0b1120;
+
+            color: #64748b;
+
+        }
+
+        .footer-main {
+
+            padding: 45px 0;
+
+        }
+
+        .footer-brand {
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+        .footer-description {
+
+            max-width: 430px;
+
+            margin-top: 10px;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+        }
+
+        .footer-links {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .footer-links a {
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            transition: .25s;
+
+        }
+
+        .footer-links a:hover {
+
+            color: #60a5fa;
+
+        }
+
+        .footer-bottom {
+
+            border-top:
+                    1px solid #1e293b;
+
+            padding: 18px 0;
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           ANIMATION
+        ===================================================== */
+
+        .animate {
+
+            animation:
+                    fadeUp .65s ease both;
+
+        }
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(18px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 767px) {
+
+            .hero {
+
+                padding:
+                        45px 0 90px;
+
+            }
+
+            .form-wrapper {
+
+                margin-top: -55px;
+
+            }
+
+            .form-content {
+
+                padding: 23px;
+
+            }
+
+            .form-actions {
+
+                flex-direction: column;
+
+            }
+
+            .action-btn {
+
+                width: 100%;
+
+            }
+
+            .footer-links {
+
+                justify-content: flex-start;
+
+                margin-top: 20px;
+
+            }
+
+            .image-preview {
+
+                width: 150px;
+
+                height: 190px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="container d-flex justify-content-between align-items-center">
+
+
+        <!-- Brand -->
+
+        <a class="brand"
+           th:href="@{/}">
+
+            <div class="brand-icon">
+
+                <i class="bi bi-book-half"></i>
+
+            </div>
+
+            CampusShelf
+
+        </a>
+
+
+        <!-- Navigation -->
+
+        <div class="d-flex gap-2">
+
+
+            <a th:href="@{/books}"
+               class="nav-btn">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Books
+
+            </a>
+
+
+            <a th:href="@{/}"
+               class="nav-btn">
+
+                <i class="bi bi-house"></i>
+
+                Home
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content animate">
+
+
+            <div class="hero-badge">
+
+                <i class="bi bi-plus-circle"></i>
+
+                SHARE A BOOK
+
+            </div>
+
+
+            <h1>
+                Add a New Book
+            </h1>
+
+
+            <p>
+
+                Share your used books with fellow students
+                and help build a better academic resource
+                community.
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FORM
+===================================================== -->
+
+<div class="form-wrapper">
+
+    <div class="container">
+
+
+        <div class="form-card animate">
+
+
+            <div class="form-content">
+
+
+                <!-- Error -->
+
+                <div th:if="${error}"
+                     class="alert error-alert mb-4">
+
+                    <i class="bi bi-exclamation-circle me-2"></i>
+
+                    <span th:text="${error}"></span>
+
+                </div>
+
+
+                <form th:action="@{/books/save}"
+                      th:object="${book}"
+                      method="post"
+                      enctype="multipart/form-data"
+                      onsubmit="return validateBookForm()">
+
+
+                    <!-- Student -->
+
+                    <input type="hidden"
+                           name="studentId"
+                           th:value="${studentId}">
+
+
+                    <!-- =================================================
+                         BASIC INFORMATION
+                    ================================================= -->
+
+                    <div class="section-header">
+
+                        <div class="section-icon">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2 class="section-title">
+                                Book Information
+                            </h2>
+
+                            <p class="section-subtitle">
+                                Enter the basic details of your book
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <!-- Book Name -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+
+                                Book Name
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{bookName}"
+                                   class="form-control"
+                                   placeholder="e.g. Java Programming"
+                                   maxlength="150"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Author -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+
+                                Author
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{author}"
+                                   class="form-control"
+                                   placeholder="e.g. Herbert Schildt"
+                                   maxlength="120"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Subject -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+
+                                Subject
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{subject}"
+                                   class="form-control"
+                                   placeholder="e.g. Java"
+                                   maxlength="100"
+                                   required>
+
+                        </div>
+
+
+                        <!-- Department -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+
+                                Department
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <select th:field="*{department}"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    Select Department
+                                </option>
+
+                                <option value="CSE">
+                                    CSE
+                                </option>
+
+                                <option value="IT">
+                                    IT
+                                </option>
+
+                                <option value="ECE">
+                                    ECE
+                                </option>
+
+                                <option value="EEE">
+                                    EEE
+                                </option>
+
+                                <option value="MECH">
+                                    MECH
+                                </option>
+
+                                <option value="CIVIL">
+                                    CIVIL
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Semester -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+
+                                Semester
+
+                                <span class="required">*</span>
+
+                            </label>
+
+
+                            <select th:field="*{semester}"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    Select Semester
+                                </option>
+
+                                <option value="1">
+                                    Semester 1
+                                </option>
+
+                                <option value="2">
+                                    Semester 2
+                                </option>
+
+                                <option value="3">
+                                    Semester 3
+                                </option>
+
+                                <option value="4">
+                                    Semester 4
+                                </option>
+
+                                <option value="5">
+                                    Semester 5
+                                </option>
+
+                                <option value="6">
+                                    Semester 6
+                                </option>
+
+                                <option value="7">
+                                    Semester 7
+                                </option>
+
+                                <option value="8">
+                                    Semester 8
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Condition -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+                                Book Condition
+                            </label>
+
+
+                            <select th:field="*{bookCondition}"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select Condition
+                                </option>
+
+                                <option value="New">
+                                    New
+                                </option>
+
+                                <option value="Good">
+                                    Good
+                                </option>
+
+                                <option value="Used">
+                                    Used
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Price -->
+
+                        <div class="col-md-6 mb-4">
+
+                            <label class="form-label">
+                                Price
+                            </label>
+
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    ₹
+                                </span>
+
+
+                                <input type="number"
+                                       step="0.01"
+                                       min="0"
+                                       th:field="*{price}"
+                                       class="form-control"
+                                       placeholder="Enter selling price">
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         IMAGE UPLOAD
+                    ================================================= -->
+
+                    <div class="section-header mt-3">
+
+                        <div class="section-icon">
+
+                            <i class="bi bi-image"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2 class="section-title">
+                                Book Cover
+                            </h2>
+
+                            <p class="section-subtitle">
+                                Upload a clear image of the book
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <label for="bookImage"
+                           class="upload-area"
+                           id="uploadArea">
+
+
+                        <div class="upload-icon">
+
+                            <i class="bi bi-cloud-arrow-up"></i>
+
+                        </div>
+
+
+                        <div class="upload-title">
+
+                            Choose your book image
+
+                        </div>
+
+
+                        <div class="upload-text">
+
+                            JPG, JPEG, PNG or WEBP<br>
+
+                            Maximum file size: 10 MB
+
+                        </div>
+
+
+                        <div class="upload-button">
+
+                            <i class="bi bi-folder2-open me-1"></i>
+
+                            Browse Image
+
+                        </div>
+
+
+                        <input type="file"
+                               name="bookImage"
+                               id="bookImage"
+                               accept="image/jpeg,image/png,image/webp"
+                               required>
+
+                    </label>
+
+
+                    <!-- Preview -->
+
+                    <div class="preview-wrapper"
+                         id="previewWrapper">
+
+
+                        <div class="preview-title">
+
+                            Image Preview
+
+                        </div>
+
+
+                        <img id="imagePreview"
+                             class="image-preview"
+                             alt="Book image preview">
+
+
+                        <div class="file-name"
+                             id="fileName">
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DESCRIPTION
+                    ================================================= -->
+
+                    <div class="section-header mt-4">
+
+                        <div class="section-icon">
+
+                            <i class="bi bi-card-text"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h2 class="section-title">
+                                Description
+                            </h2>
+
+                            <p class="section-subtitle">
+                                Tell students a little more about this book
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <textarea th:field="*{description}"
+                              class="form-control"
+                              rows="5"
+                              maxlength="1000"
+                              placeholder="Example: Book is in good condition with minimal markings. Useful for Semester 4 Java programming."></textarea>
+
+
+                    <!-- =================================================
+                         TIPS
+                    ================================================= -->
+
+                    <div class="tips-card">
+
+
+                        <div class="tips-title">
+
+                            <i class="bi bi-lightbulb-fill"></i>
+
+                            Tips for a good listing
+
+                        </div>
+
+
+                        <ul class="tips-list">
+
+                            <li>
+                                Use the correct book name and author.
+                            </li>
+
+                            <li>
+                                Select the correct department and semester.
+                            </li>
+
+                            <li>
+                                Upload a clear image showing the book cover.
+                            </li>
+
+                            <li>
+                                Mention the book condition honestly.
+                            </li>
+
+                            <li>
+                                Add useful information in the description.
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACTIONS
+                    ================================================= -->
+
+                    <div class="form-actions">
+
+
+                        <a th:href="@{/books}"
+                           class="btn btn-light border action-btn">
+
+                            <i class="bi bi-x-lg"></i>
+
+                            Cancel
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="btn btn-primary action-btn">
+
+                            <i class="bi bi-cloud-upload"></i>
+
+                            Add Book
+
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-main">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+
+                <div class="col-md-6">
+
+
+                    <div class="footer-brand">
+
+                        <i class="bi bi-book-half me-2"></i>
+
+                        CampusShelf
+
+                    </div>
+
+
+                    <div class="footer-description">
+
+                        A student-focused platform for sharing
+                        books and academic resources across
+                        the college community.
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-6">
+
+
+                    <div class="footer-links">
+
+
+                        <a th:href="@{/}">
+                            Home
+                        </a>
+
+
+                        <a th:href="@{/books}">
+                            Books
+                        </a>
+
+
+                        <a th:href="@{/materials}">
+                            Materials
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+
+
+                <span>
+                    © 2026 CampusShelf. All rights reserved.
+                </span>
+
+
+                <span>
+                    Learn • Share • Grow
+                </span>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    const bookImage =
+        document.getElementById("bookImage");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+    const previewWrapper =
+        document.getElementById("previewWrapper");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const uploadArea =
+        document.getElementById("uploadArea");
+
+
+    /* =====================================================
+       IMAGE SELECTION
+    ===================================================== */
+
+    bookImage.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+
+        if (!file) {
+
+            previewWrapper.style.display = "none";
+
+            imagePreview.removeAttribute("src");
+
+            fileName.textContent = "";
+
+            return;
+
+        }
+
+
+        const allowedTypes = [
+
+            "image/jpeg",
+
+            "image/png",
+
+            "image/webp"
+
+        ];
+
+
+        if (!allowedTypes.includes(file.type)) {
+
+            alert(
+                "Please select a JPG, JPEG, PNG or WEBP image."
+            );
+
+            this.value = "";
+
+            previewWrapper.style.display = "none";
+
+            return;
+
+        }
+
+
+        /* 10 MB */
+
+        const maxSize =
+            10 * 1024 * 1024;
+
+
+        if (file.size > maxSize) {
+
+            alert(
+                "Image size must be less than 10 MB."
+            );
+
+            this.value = "";
+
+            previewWrapper.style.display = "none";
+
+            return;
+
+        }
+
+
+        imagePreview.src =
+            URL.createObjectURL(file);
+
+
+        previewWrapper.style.display =
+            "block";
+
+
+        fileName.textContent =
+            file.name;
+
+
+    });
+
+
+    /* =====================================================
+       DRAG & DROP
+    ===================================================== */
+
+    uploadArea.addEventListener(
+        "dragover",
+        function (event) {
+
+            event.preventDefault();
+
+            uploadArea.classList.add("dragover");
+
+        }
+    );
+
+
+    uploadArea.addEventListener(
+        "dragleave",
+        function () {
+
+            uploadArea.classList.remove("dragover");
+
+        }
+    );
+
+
+    uploadArea.addEventListener(
+        "drop",
+        function (event) {
+
+            event.preventDefault();
+
+            uploadArea.classList.remove("dragover");
+
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if (!files.length) {
+                return;
+            }
+
+
+            bookImage.files = files;
+
+
+            bookImage.dispatchEvent(
+                new Event("change")
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       FORM VALIDATION
+    ===================================================== */
+
+    function validateBookForm() {
+
+        const file =
+            bookImage.files[0];
+
+
+        if (!file) {
+
+            alert(
+                "Please upload a book image."
+            );
+
+            return false;
+
+        }
+
+
+        const allowedTypes = [
+
+            "image/jpeg",
+
+            "image/png",
+
+            "image/webp"
+
+        ];
+
+
+        if (!allowedTypes.includes(file.type)) {
+
+            alert(
+                "Please upload a valid JPG, JPEG, PNG or WEBP image."
+            );
+
+            return false;
+
+        }
+
+
+        if (file.size > 10 * 1024 * 1024) {
+
+            alert(
+                "Book image must be less than 10 MB."
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

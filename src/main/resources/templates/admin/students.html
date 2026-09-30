@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Students | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f5f7fb;
+
+            color: #172033;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 255px;
+
+            height: 100vh;
+
+            background:
+                    linear-gradient(
+                            180deg,
+                            #07152f 0%,
+                            #0b1f42 55%,
+                            #0d2854 100%
+                    );
+
+            color: white;
+
+            z-index: 1000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            box-shadow:
+                    8px 0 30px rgba(15,23,42,0.10);
+
+        }
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .sidebar-brand {
+
+            height: 75px;
+
+            padding: 0 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            border-bottom:
+                    1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .brand-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #6366f1
+                    );
+
+            box-shadow:
+                    0 8px 20px rgba(59,130,246,0.25);
+
+            font-size: 18px;
+
+        }
+
+        .brand-name {
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+        }
+
+        .brand-role {
+
+            margin-top: 3px;
+
+            color:
+                    rgba(255,255,255,0.45);
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        /* =====================================================
+           MENU
+        ===================================================== */
+
+        .sidebar-menu {
+
+            padding: 25px 14px;
+
+            flex: 1;
+
+        }
+
+        .menu-title {
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            color:
+                    rgba(255,255,255,0.35);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+        }
+
+        .sidebar-link {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            color:
+                    rgba(255,255,255,0.65);
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            transition: .25s;
+
+        }
+
+        .sidebar-link i {
+
+            width: 19px;
+
+            text-align: center;
+
+            font-size: 15px;
+
+        }
+
+        .sidebar-link:hover {
+
+            color: white;
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            transform:
+                    translateX(2px);
+
+        }
+
+        .sidebar-link.active {
+
+            color: white;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(59,130,246,0.95),
+                            rgba(79,70,229,0.95)
+                    );
+
+            box-shadow:
+                    0 8px 20px rgba(37,99,235,0.20);
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+
+            padding: 15px;
+
+            border-top:
+                    1px solid rgba(255,255,255,0.08);
+
+        }
+
+        .admin-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 10px;
+
+            margin-bottom: 10px;
+
+            border-radius: 11px;
+
+            background:
+                    rgba(255,255,255,0.05);
+
+        }
+
+        .admin-avatar {
+
+            width: 35px;
+
+            height: 35px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 12px;
+
+        }
+
+        .admin-name {
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+        .admin-status {
+
+            margin-top: 2px;
+
+            color:
+                    rgba(255,255,255,0.40);
+
+            font-size: 8px;
+
+        }
+
+        .logout-link {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            width: 100%;
+
+            padding: 10px;
+
+            border-radius: 9px;
+
+            color: #fca5a5;
+
+            background:
+                    rgba(239,68,68,0.08);
+
+            border:
+                    1px solid rgba(239,68,68,0.12);
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            transition: .25s;
+
+        }
+
+        .logout-link:hover {
+
+            color: white;
+
+            background: #dc2626;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+
+            height: 75px;
+
+            padding: 0 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            background: white;
+
+            border-bottom:
+                    1px solid #e8edf3;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+        .page-title {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .page-subtitle {
+
+            margin-top: 3px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+        }
+
+        .topbar-admin {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 7px 10px;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            border:
+                    1px solid #eef2f7;
+
+        }
+
+        .topbar-avatar {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #6366f1
+                    );
+
+            color: white;
+
+            font-size: 11px;
+
+        }
+
+        .topbar-name {
+
+            color: #334155;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+        .topbar-role {
+
+            color: #94a3b8;
+
+            font-size: 8px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        .mobile-menu-btn {
+
+            display: none;
+
+            width: 38px;
+
+            height: 38px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+        }
+
+        .sidebar-overlay {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                    rgba(15,23,42,0.45);
+
+            z-index: 999;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding: 32px 35px 50px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .page-header {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 25px 28px;
+
+            border-radius: 17px;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 90% 20%,
+                            rgba(96,165,250,0.25),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #0b2147,
+                            #173b75
+                    );
+
+            box-shadow:
+                    0 15px 35px rgba(15,23,42,0.10);
+
+        }
+
+        .page-header::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.08);
+
+            right: -65px;
+
+            top: -80px;
+
+        }
+
+        .header-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .header-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 6px 10px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(255,255,255,0.09);
+
+            border:
+                    1px solid rgba(255,255,255,0.12);
+
+            color: #93c5fd;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+        .header-title {
+
+            margin-top: 10px;
+
+            margin-bottom: 5px;
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+        .header-description {
+
+            margin: 0;
+
+            color:
+                    rgba(255,255,255,0.60);
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           ALERTS
+        ===================================================== */
+
+        .custom-alert {
+
+            margin-top: 20px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            padding: 12px 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+        }
+
+        .alert-danger {
+
+            color: #b91c1c;
+
+            background: #fef2f2;
+
+        }
+
+        .alert-success {
+
+            color: #15803d;
+
+            background: #f0fdf4;
+
+        }
+
+
+        /* =====================================================
+           TABLE CARD
+        ===================================================== */
+
+        .table-card {
+
+            margin-top: 25px;
+
+            overflow: hidden;
+
+            background: white;
+
+            border:
+                    1px solid #e8edf3;
+
+            border-radius: 16px;
+
+            box-shadow:
+                    0 8px 25px rgba(15,23,42,0.04);
+
+        }
+
+        .table-header {
+
+            padding: 18px 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border-bottom:
+                    1px solid #eef2f7;
+
+        }
+
+        .table-heading {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+        .table-heading-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+        }
+
+        .student-count {
+
+            padding: 6px 10px;
+
+            border-radius: 50px;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+        .students-table {
+
+            width: 100%;
+
+            min-width: 850px;
+
+            margin: 0;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+        }
+
+        .students-table thead th {
+
+            padding: 13px 15px;
+
+            border: none;
+
+            background: #f8fafc;
+
+            color: #94a3b8;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .7px;
+
+            text-transform: uppercase;
+
+            white-space: nowrap;
+
+        }
+
+        .students-table tbody td {
+
+            padding: 15px;
+
+            border-top:
+                    1px solid #f1f5f9;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            vertical-align: middle;
+
+        }
+
+        .students-table tbody tr {
+
+            transition: .2s;
+
+        }
+
+        .students-table tbody tr:hover {
+
+            background: #fafcff;
+
+        }
+
+
+        /* =====================================================
+           STUDENT ID
+        ===================================================== */
+
+        .student-id {
+
+            width: 32px;
+
+            height: 27px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 7px;
+
+            background: #f1f5f9;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           STUDENT PROFILE
+        ===================================================== */
+
+        .student-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            min-width: 160px;
+
+        }
+
+        .student-avatar {
+
+            width: 34px;
+
+            height: 34px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #dbeafe,
+                            #e0e7ff
+                    );
+
+            color: #2563eb;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+        .student-name {
+
+            color: #334155;
+
+            font-size: 10px;
+
+            font-weight: 750;
+
+        }
+
+        .student-email {
+
+            margin-top: 3px;
+
+            color: #94a3b8;
+
+            font-size: 8px;
+
+        }
+
+
+        /* =====================================================
+           EMAIL
+        ===================================================== */
+
+        .email-cell {
+
+            color: #475569;
+
+            font-size: 9px;
+
+        }
+
+
+        /* =====================================================
+           DEPARTMENT
+        ===================================================== */
+
+        .department-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 6px 9px;
+
+            border-radius: 50px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           YEAR
+        ===================================================== */
+
+        .year-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 38px;
+
+            padding: 6px 8px;
+
+            border-radius: 7px;
+
+            background: #f0fdf4;
+
+            color: #15803d;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           PHONE
+        ===================================================== */
+
+        .phone-cell {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #64748b;
+
+            white-space: nowrap;
+
+        }
+
+        .phone-icon {
+
+            color: #94a3b8;
+
+        }
+
+
+        /* =====================================================
+           DELETE
+        ===================================================== */
+
+        .delete-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 7px 10px;
+
+            border-radius: 8px;
+
+            border:
+                    1px solid #fecaca;
+
+            background: #fffafa;
+
+            color: #dc2626;
+
+            text-decoration: none;
+
+            font-size: 8px;
+
+            font-weight: 750;
+
+            transition: .2s;
+
+            white-space: nowrap;
+
+        }
+
+        .delete-btn:hover {
+
+            color: white;
+
+            background: #dc2626;
+
+            border-color: #dc2626;
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+        }
+
+        .empty-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f8fafc;
+
+            color: #94a3b8;
+
+            font-size: 25px;
+
+        }
+
+        .empty-title {
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+        }
+
+        .empty-text {
+
+            margin-top: 6px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            margin-top: 30px;
+
+            color: #94a3b8;
+
+            text-align: center;
+
+            font-size: 9px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .sidebar {
+
+                transform:
+                        translateX(-100%);
+
+                transition: .3s;
+
+            }
+
+            .sidebar.show {
+
+                transform:
+                        translateX(0);
+
+            }
+
+            .sidebar-overlay.show {
+
+                display: block;
+
+            }
+
+            .main-content {
+
+                margin-left: 0;
+
+            }
+
+            .mobile-menu-btn {
+
+                display: inline-flex;
+
+            }
+
+            .topbar {
+
+                padding: 0 20px;
+
+            }
+
+            .content {
+
+                padding: 25px 20px 40px;
+
+            }
+
+        }
+
+
+        @media (max-width: 575px) {
+
+            .topbar-admin {
+
+                display: none;
+
+            }
+
+            .page-header {
+
+                padding: 22px;
+
+            }
+
+            .header-title {
+
+                font-size: 19px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar"
+       id="sidebar">
+
+
+    <!-- Brand -->
+
+    <div class="sidebar-brand">
+
+        <div class="brand-icon">
+
+            <i class="bi bi-book-half"></i>
+
+        </div>
+
+
+        <div>
+
+            <div class="brand-name">
+                CampusShelf
+            </div>
+
+            <div class="brand-role">
+                Administration
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Menu -->
+
+    <div class="sidebar-menu">
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+
+        <!-- Dashboard -->
+
+        <a th:href="@{/admin/dashboard}"
+           class="sidebar-link">
+
+            <i class="bi bi-grid-1x2-fill"></i>
+
+            Dashboard
+
+        </a>
+
+
+        <!-- Students -->
+
+        <a th:href="@{/admin/students}"
+           class="sidebar-link active">
+
+            <i class="bi bi-people-fill"></i>
+
+            Students
+
+        </a>
+
+
+        <!-- Books -->
+
+        <a th:href="@{/admin/books}"
+           class="sidebar-link">
+
+            <i class="bi bi-book-fill"></i>
+
+            Books
+
+        </a>
+
+
+        <!-- Materials -->
+
+        <a th:href="@{/admin/materials}"
+           class="sidebar-link">
+
+            <i class="bi bi-file-earmark-text-fill"></i>
+
+            Study Materials
+
+        </a>
+
+
+        <div class="menu-title mt-4">
+            System
+        </div>
+
+
+        <!-- Website -->
+
+        <a th:href="@{/}"
+           class="sidebar-link">
+
+            <i class="bi bi-house-fill"></i>
+
+            View Website
+
+        </a>
+
+
+    </div>
+
+
+    <!-- Sidebar Bottom -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="admin-profile">
+
+
+            <div class="admin-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="admin-name">
+                    Administrator
+                </div>
+
+                <div class="admin-status">
+
+                    <i class="bi bi-circle-fill text-success me-1"></i>
+
+                    Online
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <a th:href="@{/admin/login}"
+           class="logout-link">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MOBILE OVERLAY
+===================================================== -->
+
+<div class="sidebar-overlay"
+     id="sidebarOverlay"
+     onclick="closeSidebar()">
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- =================================================
+         TOPBAR
+    ================================================= -->
+
+    <header class="topbar">
+
+
+        <div class="d-flex align-items-center gap-3">
+
+
+            <button class="mobile-menu-btn"
+                    onclick="toggleSidebar()">
+
+                <i class="bi bi-list"></i>
+
+            </button>
+
+
+            <div>
+
+                <h1 class="page-title">
+                    Manage Students
+                </h1>
+
+
+                <div class="page-subtitle">
+
+                    View and manage registered student accounts
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Admin -->
+
+        <div class="topbar-admin">
+
+
+            <div class="topbar-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="topbar-name">
+                    Administrator
+                </div>
+
+                <div class="topbar-role">
+                    System Admin
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <div class="content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <section class="page-header">
+
+
+            <div class="header-content">
+
+
+                <div class="header-badge">
+
+                    <i class="bi bi-people-fill"></i>
+
+                    USER MANAGEMENT
+
+                </div>
+
+
+                <h2 class="header-title">
+
+                    Registered Students
+
+                </h2>
+
+
+                <p class="header-description">
+
+                    View registered students and manage
+                    their CampusShelf accounts.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             ALERTS
+        ================================================= -->
+
+        <div th:if="${error}"
+             class="custom-alert alert-danger">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <span th:text="${error}">
+            </span>
+
+        </div>
+
+
+        <div th:if="${success}"
+             class="custom-alert alert-success">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span th:text="${success}">
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             TABLE CARD
+        ================================================= -->
+
+        <div class="table-card">
+
+
+            <!-- Table Header -->
+
+            <div class="table-header">
+
+
+                <div class="table-heading">
+
+
+                    <div class="table-heading-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+
+                    All Students
+
+
+                </div>
+
+
+                <div class="student-count">
+
+                    <i class="bi bi-database me-1"></i>
+
+                    <span th:text="${#lists.size(students)}">
+                    </span>
+
+                    Students
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================= -->
+
+            <div th:if="${#lists.isEmpty(students)}"
+                 class="empty-state">
+
+
+                <div class="empty-icon">
+
+                    <i class="bi bi-person-x"></i>
+
+                </div>
+
+
+                <div class="empty-title">
+
+                    No Students Registered
+
+                </div>
+
+
+                <div class="empty-text">
+
+                    There are currently no students
+                    registered on CampusShelf.
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 STUDENTS TABLE
+            ================================================= -->
+
+            <div th:unless="${#lists.isEmpty(students)}"
+                 class="table-wrapper">
+
+
+                <table class="students-table">
+
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Department
+                        </th>
+
+                        <th>
+                            Year
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <tr th:each="student : ${students}">
+
+
+                        <!-- ID -->
+
+                        <td>
+
+                            <span class="student-id"
+                                  th:text="${student.id}">
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Student -->
+
+                        <td>
+
+
+                            <div class="student-profile">
+
+
+                                <div class="student-avatar">
+
+
+                                    <span
+                                            th:if="${student.name != null and !#strings.isEmpty(student.name)}"
+                                            th:text="${#strings.substring(student.name,0,1).toUpperCase()}">
+
+                                    </span>
+
+
+                                    <i
+                                            th:unless="${student.name != null and !#strings.isEmpty(student.name)}"
+                                            class="bi bi-person">
+
+                                    </i>
+
+
+                                </div>
+
+
+                                <div>
+
+
+                                    <div class="student-name"
+                                         th:text="${student.name}">
+
+                                    </div>
+
+
+                                    <div class="student-email"
+                                         th:text="${student.email}">
+
+                                    </div>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                        <!-- Email -->
+
+                        <td>
+
+                            <div class="email-cell"
+                                 th:text="${student.email}">
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Department -->
+
+                        <td>
+
+                            <span class="department-badge">
+
+                                <i class="bi bi-diagram-3"></i>
+
+                                <span th:text="${student.department}">
+                                </span>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Year -->
+
+                        <td>
+
+                            <span class="year-badge">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                <span th:text="${student.year}">
+                                </span>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- Phone -->
+
+                        <td>
+
+
+                            <div class="phone-cell">
+
+
+                                <i class="bi bi-telephone phone-icon"></i>
+
+
+                                <span th:text="${student.phone}">
+                                </span>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                        <!-- Delete -->
+
+                        <td>
+
+
+                            <a th:href="@{'/admin/students/delete/' + ${student.id}}"
+                               class="delete-btn"
+                               onclick="return confirm('Delete this student? Students with books or materials cannot be deleted.')">
+
+
+                                <i class="bi bi-trash3"></i>
+
+                                Delete
+
+
+                            </a>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="footer">
+
+            © 2026 CampusShelf · Administration Panel
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    function toggleSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .toggle("show");
+
+        document
+            .getElementById("sidebarOverlay")
+            .classList
+            .toggle("show");
+
+    }
+
+
+    function closeSidebar() {
+
+        document
+            .getElementById("sidebar")
+            .classList
+            .remove("show");
+
+        document
+            .getElementById("sidebarOverlay")
+            .classList
+            .remove("show");
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

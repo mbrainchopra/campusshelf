@@ -1,0 +1,2289 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Books - CampusShelf">
+
+    <title>Books | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: 'Inter', sans-serif;
+
+            background: #f8fafc;
+
+            color: #172033;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+
+            min-height: 72px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b
+                    );
+
+            box-shadow:
+                    0 8px 30px rgba(15,23,42,0.15);
+
+        }
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white !important;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+        .brand-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #3b82f6,
+                            #6366f1
+                    );
+
+            box-shadow:
+                    0 8px 18px rgba(59,130,246,0.30);
+
+        }
+
+        .nav-link-custom {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            background:
+                    rgba(255,255,255,0.08);
+
+            border:
+                    1px solid rgba(255,255,255,0.15);
+
+            transition: .25s;
+
+        }
+
+        .nav-link-custom:hover {
+
+            color: white;
+
+            background:
+                    rgba(255,255,255,0.16);
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .page-hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 65px 0 90px;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 20%,
+                            rgba(59,130,246,0.25),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(99,102,241,0.22),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b,
+                            #172554
+                    );
+
+        }
+
+        .page-hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 320px;
+
+            height: 320px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.08);
+
+            right: -130px;
+
+            top: -150px;
+
+        }
+
+        .page-hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+
+            height: 230px;
+
+            border-radius: 50%;
+
+            border:
+                    1px solid rgba(255,255,255,0.06);
+
+            left: -100px;
+
+            bottom: -130px;
+
+        }
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .hero-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 7px 13px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(255,255,255,0.09);
+
+            border:
+                    1px solid rgba(255,255,255,0.13);
+
+            color:
+                    rgba(255,255,255,0.80);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
+
+        }
+
+        .hero-badge i {
+
+            color: #60a5fa;
+
+        }
+
+        .hero-title {
+
+            font-size:
+                    clamp(2.3rem, 5vw, 3.7rem);
+
+            font-weight: 800;
+
+            letter-spacing: -2px;
+
+            margin: 0;
+
+        }
+
+        .hero-description {
+
+            max-width: 650px;
+
+            margin-top: 18px;
+
+            color:
+                    rgba(255,255,255,0.68);
+
+            line-height: 1.8;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           HERO BUTTONS
+        ===================================================== */
+
+        .hero-actions {
+
+            margin-top: 25px;
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .hero-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 11px 17px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: .25s;
+
+        }
+
+        .hero-btn-primary {
+
+            background: white;
+
+            color: #172033;
+
+        }
+
+        .hero-btn-primary:hover {
+
+            color: #172033;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 10px 25px rgba(0,0,0,0.18);
+
+        }
+
+        .hero-btn-secondary {
+
+            color: white;
+
+            border:
+                    1px solid rgba(255,255,255,0.20);
+
+            background:
+                    rgba(255,255,255,0.08);
+
+        }
+
+        .hero-btn-secondary:hover {
+
+            color: white;
+
+            background:
+                    rgba(255,255,255,0.15);
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-wrapper {
+
+            margin-top: -42px;
+
+            position: relative;
+
+            z-index: 10;
+
+        }
+
+        .stats-card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 23px;
+
+            box-shadow:
+                    0 18px 50px rgba(15,23,42,0.10);
+
+        }
+
+        .stat {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 8px 15px;
+
+            border-right:
+                    1px solid #e5e7eb;
+
+        }
+
+        .stat:last-child {
+
+            border-right: none;
+
+        }
+
+        .stat-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+        }
+
+        .stat-number {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+        }
+
+        .stat-label {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-top: 2px;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main-content {
+
+            padding: 70px 0 90px;
+
+        }
+
+        .section-label {
+
+            color: #2563eb;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+        }
+
+        .section-title {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-top: 8px;
+
+        }
+
+        .section-description {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-top: 8px;
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-card {
+
+            margin-top: 28px;
+
+            background: white;
+
+            border:
+                    1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow:
+                    0 10px 35px rgba(15,23,42,0.05);
+
+        }
+
+        .form-label {
+
+            color: #334155;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+
+        }
+
+        .form-control,
+        .form-select {
+
+            min-height: 44px;
+
+            border-radius: 10px;
+
+            border:
+                    1px solid #dbe2ea;
+
+            font-size: 13px;
+
+            color: #334155;
+
+            box-shadow: none;
+
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color: #60a5fa;
+
+            box-shadow:
+                    0 0 0 3px rgba(59,130,246,0.10);
+
+        }
+
+        .search-btn {
+
+            min-height: 44px;
+
+            border-radius: 10px;
+
+            padding: 0 18px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+        .clear-btn {
+
+            min-height: 44px;
+
+            border-radius: 10px;
+
+            padding: 0 16px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           RESULTS HEADER
+        ===================================================== */
+
+        .results-header {
+
+            margin-top: 48px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+        .results-title {
+
+            margin: 0;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+        }
+
+        .results-badge {
+
+            padding: 6px 11px;
+
+            border-radius: 50px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           BOOK CARD
+        ===================================================== */
+
+        .book-card {
+
+            height: 100%;
+
+            background: white;
+
+            border:
+                    1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            transition:
+                    transform .3s ease,
+                    box-shadow .3s ease,
+                    border-color .3s ease;
+
+        }
+
+        .book-card:hover {
+
+            transform:
+                    translateY(-7px);
+
+            border-color: #bfdbfe;
+
+            box-shadow:
+                    0 20px 45px rgba(15,23,42,0.10);
+
+        }
+
+
+        /* =====================================================
+           BOOK IMAGE
+        ===================================================== */
+
+        .book-image-wrapper {
+
+            position: relative;
+
+            height: 245px;
+
+            overflow: hidden;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eef4ff,
+                            #f8fafc
+                    );
+
+        }
+
+        .book-image {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                    transform .45s ease;
+
+        }
+
+        .book-card:hover .book-image {
+
+            transform:
+                    scale(1.04);
+
+        }
+
+        .book-placeholder {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #eff6ff,
+                            #f1f5f9
+                    );
+
+            color: #2563eb;
+
+            font-size: 54px;
+
+        }
+
+        .condition-badge {
+
+            position: absolute;
+
+            top: 14px;
+
+            right: 14px;
+
+            padding: 6px 10px;
+
+            border-radius: 50px;
+
+            background:
+                    rgba(255,255,255,0.95);
+
+            color: #2563eb;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            box-shadow:
+                    0 5px 15px rgba(15,23,42,0.12);
+
+        }
+
+
+        /* =====================================================
+           BOOK BODY
+        ===================================================== */
+
+        .book-body {
+
+            padding: 23px;
+
+        }
+
+        .book-title {
+
+            color: #172033;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            line-height: 1.4;
+
+            margin: 0 0 7px;
+
+        }
+
+        .book-author {
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 20px;
+
+        }
+
+        .book-info {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin-bottom: 12px;
+
+        }
+
+        .info-icon {
+
+            width: 29px;
+
+            height: 29px;
+
+            flex-shrink: 0;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f8fafc;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+        }
+
+        .info-label {
+
+            color: #94a3b8;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+        }
+
+        .info-value {
+
+            color: #334155;
+
+            font-size: 12px;
+
+            font-weight: 650;
+
+            margin-top: 2px;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =====================================================
+           PRICE
+        ===================================================== */
+
+        .price-box {
+
+            margin-top: 17px;
+
+            padding: 14px;
+
+            border-radius: 12px;
+
+            background: #f0fdf4;
+
+            border:
+                    1px solid #dcfce7;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+        .price-label {
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+        .price {
+
+            color: #15803d;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           UPLOADER
+        ===================================================== */
+
+        .uploaded-by {
+
+            margin-top: 17px;
+
+            padding-top: 15px;
+
+            border-top:
+                    1px solid #eef2f7;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+        .user-avatar {
+
+            width: 31px;
+
+            height: 31px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #6366f1
+                    );
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+        }
+
+        .uploaded-label {
+
+            color: #94a3b8;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+        }
+
+        .uploaded-name {
+
+            color: #334155;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .card-actions {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 7px;
+
+        }
+
+        .action-btn {
+
+            min-height: 39px;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            transition: .25s;
+
+        }
+
+        .action-btn:hover {
+
+            transform: translateY(-1px);
+
+        }
+
+        .view-btn {
+
+            flex: 1;
+
+        }
+
+        .delete-btn {
+
+            width: 43px;
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+
+            background: white;
+
+            border:
+                    1px dashed #cbd5e1;
+
+            border-radius: 18px;
+
+            padding: 65px 20px;
+
+            text-align: center;
+
+        }
+
+        .empty-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin: auto;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 30px;
+
+        }
+
+        .empty-state h5 {
+
+            margin-top: 20px;
+
+            font-weight: 800;
+
+        }
+
+        .empty-state p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-top: 7px;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            background: #0b1120;
+
+            color: #64748b;
+
+        }
+
+        .footer-main {
+
+            padding: 45px 0;
+
+        }
+
+        .footer-brand {
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+        .footer-description {
+
+            max-width: 430px;
+
+            margin-top: 10px;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+        .footer-links {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .footer-links a {
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            transition: .25s;
+
+        }
+
+        .footer-links a:hover {
+
+            color: #60a5fa;
+
+        }
+
+        .footer-bottom {
+
+            border-top:
+                    1px solid #1e293b;
+
+            padding: 18px 0;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           ANIMATION
+        ===================================================== */
+
+        .animate {
+
+            animation:
+                    fadeUp .65s ease both;
+
+        }
+
+        .delay-1 {
+
+            animation-delay: .1s;
+
+        }
+
+        .delay-2 {
+
+            animation-delay: .2s;
+
+        }
+
+        .delay-3 {
+
+            animation-delay: .3s;
+
+        }
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 767px) {
+
+            .navbar {
+
+                padding: 12px 0;
+
+            }
+
+            .page-hero {
+
+                padding:
+                        50px 0 75px;
+
+            }
+
+            .hero-title {
+
+                font-size: 2.5rem;
+
+            }
+
+            .stats-wrapper {
+
+                margin-top: -30px;
+
+            }
+
+            .stat {
+
+                border-right: none;
+
+                padding: 12px;
+
+            }
+
+            .main-content {
+
+                padding:
+                        55px 0 70px;
+
+            }
+
+            .section-title {
+
+                font-size: 26px;
+
+            }
+
+            .results-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+            .footer-links {
+
+                justify-content: flex-start;
+
+                margin-top: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="container d-flex justify-content-between align-items-center">
+
+
+        <!-- Brand -->
+
+        <a class="brand"
+           th:href="@{/}">
+
+            <div class="brand-icon">
+
+                <i class="bi bi-book-half"></i>
+
+            </div>
+
+            CampusShelf
+
+        </a>
+
+
+        <!-- Navigation -->
+
+        <div class="d-flex gap-2">
+
+
+            <a th:href="@{/materials}"
+               class="nav-link-custom">
+
+                <i class="bi bi-file-earmark-text"></i>
+
+                Materials
+
+            </a>
+
+
+            <a th:href="@{/}"
+               class="nav-link-custom">
+
+                <i class="bi bi-house"></i>
+
+                Home
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <div class="hero-content animate">
+
+
+            <div class="hero-badge">
+
+                <i class="bi bi-book-half"></i>
+
+                STUDENT BOOK MARKETPLACE
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Find Your Next Book
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Discover affordable textbooks and reference
+                books shared by students across your college
+                community.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+
+                <a th:href="@{/materials}"
+                   class="hero-btn hero-btn-secondary">
+
+                    <i class="bi bi-file-earmark-text"></i>
+
+                    Study Materials
+
+                </a>
+
+
+                <a th:href="@{/}"
+                   class="hero-btn hero-btn-primary">
+
+                    <i class="bi bi-house"></i>
+
+                    Home
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats-wrapper">
+
+    <div class="container">
+
+        <div class="stats-card">
+
+
+            <div class="row">
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="stat-number">
+                                Books
+                            </div>
+
+                            <div class="stat-label">
+                                Browse collection
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-search"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="stat-number">
+                                Search
+                            </div>
+
+                            <div class="stat-label">
+                                Find quickly
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-tags"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="stat-number">
+                                Categories
+                            </div>
+
+                            <div class="stat-label">
+                                Departments
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-md-3">
+
+                    <div class="stat">
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="stat-number">
+                                Students
+                            </div>
+
+                            <div class="stat-label">
+                                Student community
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-content">
+
+    <div class="container">
+
+
+        <!-- Header -->
+
+        <div class="animate">
+
+            <div class="section-label">
+                BOOK COLLECTION
+            </div>
+
+            <h2 class="section-title">
+                Explore Available Books
+            </h2>
+
+            <p class="section-description">
+
+                Search by book name, department or semester
+                to find the right academic resource.
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             SEARCH
+        ================================================= -->
+
+        <div class="search-card animate delay-1">
+
+
+            <form th:action="@{/books}"
+                  method="get">
+
+
+                <div class="row g-3">
+
+
+                    <!-- Search -->
+
+                    <div class="col-lg-5">
+
+                        <label class="form-label">
+
+                            <i class="bi bi-search me-1"></i>
+
+                            Search Book
+
+                        </label>
+
+
+                        <input type="text"
+                               name="search"
+                               th:value="${search}"
+                               class="form-control"
+                               placeholder="Search by book name...">
+
+                    </div>
+
+
+                    <!-- Department -->
+
+                    <div class="col-lg-3 col-md-4">
+
+                        <label class="form-label">
+
+                            <i class="bi bi-diagram-3 me-1"></i>
+
+                            Department
+
+                        </label>
+
+
+                        <select name="department"
+                                class="form-select">
+
+
+                            <option value="">
+                                All Departments
+                            </option>
+
+
+                            <option value="CSE"
+                                    th:selected="${selectedDepartment == 'CSE'}">
+                                CSE
+                            </option>
+
+
+                            <option value="IT"
+                                    th:selected="${selectedDepartment == 'IT'}">
+                                IT
+                            </option>
+
+
+                            <option value="ECE"
+                                    th:selected="${selectedDepartment == 'ECE'}">
+                                ECE
+                            </option>
+
+
+                            <option value="EEE"
+                                    th:selected="${selectedDepartment == 'EEE'}">
+                                EEE
+                            </option>
+
+
+                            <option value="MECH"
+                                    th:selected="${selectedDepartment == 'MECH'}">
+                                MECH
+                            </option>
+
+
+                            <option value="CIVIL"
+                                    th:selected="${selectedDepartment == 'CIVIL'}">
+                                CIVIL
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Semester -->
+
+                    <div class="col-lg-2 col-md-4">
+
+                        <label class="form-label">
+
+                            <i class="bi bi-calendar3 me-1"></i>
+
+                            Semester
+
+                        </label>
+
+
+                        <select name="semester"
+                                class="form-select">
+
+
+                            <option value="">
+                                All
+                            </option>
+
+
+                            <option value="1"
+                                    th:selected="${selectedSemester == '1'}">
+                                Semester 1
+                            </option>
+
+                            <option value="2"
+                                    th:selected="${selectedSemester == '2'}">
+                                Semester 2
+                            </option>
+
+                            <option value="3"
+                                    th:selected="${selectedSemester == '3'}">
+                                Semester 3
+                            </option>
+
+                            <option value="4"
+                                    th:selected="${selectedSemester == '4'}">
+                                Semester 4
+                            </option>
+
+                            <option value="5"
+                                    th:selected="${selectedSemester == '5'}">
+                                Semester 5
+                            </option>
+
+                            <option value="6"
+                                    th:selected="${selectedSemester == '6'}">
+                                Semester 6
+                            </option>
+
+                            <option value="7"
+                                    th:selected="${selectedSemester == '7'}">
+                                Semester 7
+                            </option>
+
+                            <option value="8"
+                                    th:selected="${selectedSemester == '8'}">
+                                Semester 8
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+
+                    <div class="col-lg-2 col-md-4 d-flex align-items-end gap-2">
+
+
+                        <button type="submit"
+                                class="btn btn-primary search-btn flex-fill">
+
+                            <i class="bi bi-search"></i>
+
+                            Search
+
+                        </button>
+
+
+                        <a th:href="@{/books}"
+                           class="btn btn-light border clear-btn">
+
+                            <i class="bi bi-arrow-counterclockwise"></i>
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =================================================
+             RESULTS HEADER
+        ================================================= -->
+
+        <div class="results-header animate delay-2">
+
+
+            <h3 class="results-title">
+
+                Available Books
+
+            </h3>
+
+
+            <div class="results-badge">
+
+                <i class="bi bi-collection me-1"></i>
+
+                <span th:text="${#lists.size(books)}">
+                    0
+                </span>
+
+                Books Found
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             BOOKS
+        ================================================= -->
+
+        <div class="row g-4">
+
+
+            <div class="col-md-6 col-xl-4"
+                 th:each="book, iterStat : ${books}">
+
+
+                <div class="book-card animate"
+                     th:classappend="${iterStat.index % 3 == 0 ? 'delay-1' : (iterStat.index % 3 == 1 ? 'delay-2' : 'delay-3')}">
+
+
+                    <!-- =================================================
+                         IMAGE
+                    ================================================= -->
+
+                    <div class="book-image-wrapper">
+
+
+                        <!-- Image -->
+
+                        <img th:if="${book.image != null and !#strings.isEmpty(book.image)}"
+                             th:src="@{'/books/image/' + ${book.id}}"
+                             class="book-image"
+                             th:alt="${book.bookName}">
+
+
+                        <!-- Placeholder -->
+
+                        <div th:unless="${book.image != null and !#strings.isEmpty(book.image)}"
+                             class="book-placeholder">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+
+                        <!-- Condition -->
+
+                        <div class="condition-badge"
+                             th:if="${book.bookCondition != null and !#strings.isEmpty(book.bookCondition)}">
+
+                            <i class="bi bi-check-circle me-1"></i>
+
+                            <span th:text="${book.bookCondition}"></span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         BODY
+                    ================================================= -->
+
+                    <div class="book-body">
+
+
+                        <!-- Title -->
+
+                        <h4 class="book-title"
+                            th:text="${book.bookName}">
+
+                        </h4>
+
+
+                        <!-- Author -->
+
+                        <div class="book-author">
+
+                            <i class="bi bi-person me-1"></i>
+
+                            <span th:text="${book.author}">
+                            </span>
+
+                        </div>
+
+
+                        <!-- Subject -->
+
+                        <div class="book-info">
+
+                            <div class="info-icon">
+
+                                <i class="bi bi-bookmark"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="info-label">
+                                    Subject
+                                </div>
+
+                                <div class="info-value"
+                                     th:text="${book.subject}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Department -->
+
+                        <div class="book-info">
+
+                            <div class="info-icon">
+
+                                <i class="bi bi-diagram-3"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="info-label">
+                                    Department
+                                </div>
+
+                                <div class="info-value"
+                                     th:text="${book.department}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Semester -->
+
+                        <div class="book-info">
+
+                            <div class="info-icon">
+
+                                <i class="bi bi-calendar3"></i>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="info-label">
+                                    Semester
+                                </div>
+
+                                <div class="info-value"
+                                     th:text="${book.semester}">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Price -->
+
+                        <div class="price-box">
+
+
+                            <div>
+
+                                <div class="price-label">
+                                    BOOK PRICE
+                                </div>
+
+                                <div class="price">
+
+                                    ₹<span th:text="${book.price}"></span>
+
+                                </div>
+
+                            </div>
+
+
+                            <i class="bi bi-tag-fill text-success"></i>
+
+
+                        </div>
+
+
+                        <!-- Uploaded By -->
+
+                        <div class="uploaded-by">
+
+
+                            <div class="user-avatar">
+
+                                <span
+                                        th:text="${#strings.substring(book.student.name,0,1).toUpperCase()}">
+
+                                </span>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="uploaded-label">
+                                    Uploaded By
+                                </div>
+
+                                <div class="uploaded-name"
+                                     th:text="${book.student.name}">
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- Actions -->
+
+                        <div class="card-actions">
+
+
+                            <a th:href="@{'/books/view/' + ${book.id}}"
+                               class="btn btn-primary action-btn view-btn">
+
+                                <i class="bi bi-eye"></i>
+
+                                View Details
+
+                            </a>
+
+
+                            <a th:href="@{'/books/delete/' + ${book.id}}"
+                               class="btn btn-outline-danger action-btn delete-btn"
+                               title="Delete"
+                               onclick="return confirm('Are you sure you want to delete this book?')">
+
+                                <i class="bi bi-trash3"></i>
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================= -->
+
+        <div th:if="${#lists.isEmpty(books)}"
+             class="empty-state mt-4">
+
+
+            <div class="empty-icon">
+
+                <i class="bi bi-book"></i>
+
+            </div>
+
+
+            <h5>
+                No books found
+            </h5>
+
+
+            <p>
+
+                We couldn't find any books matching
+                your search or selected filters.
+
+            </p>
+
+
+            <a th:href="@{/books}"
+               class="btn btn-primary btn-sm mt-2">
+
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+
+                Clear Filters
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-main">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+
+                <div class="col-md-6">
+
+
+                    <div class="footer-brand">
+
+                        <i class="bi bi-book-half me-2"></i>
+
+                        CampusShelf
+
+                    </div>
+
+
+                    <div class="footer-description">
+
+                        A student-focused platform for sharing
+                        books and academic resources across
+                        the college community.
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-6">
+
+
+                    <div class="footer-links">
+
+
+                        <a th:href="@{/}">
+                            Home
+                        </a>
+
+
+                        <a th:href="@{/books}">
+                            Books
+                        </a>
+
+
+                        <a th:href="@{/materials}">
+                            Materials
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+
+
+                <span>
+                    © 2026 CampusShelf. All rights reserved.
+                </span>
+
+
+                <span>
+                    Learn • Share • Grow
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>

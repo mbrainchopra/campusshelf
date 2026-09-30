@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Student Login - CampusShelf">
+
+    <title>Student Login | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family: 'Inter', sans-serif;
+
+            background:
+                    radial-gradient(
+                            circle at 15% 20%,
+                            rgba(59,130,246,0.35),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 85% 80%,
+                            rgba(99,102,241,0.30),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b,
+                            #172554
+                    );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            color: #172033;
+
+        }
+
+
+        /* =========================================
+           BACKGROUND SHAPES
+        ========================================= */
+
+        .shape {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            filter: blur(2px);
+
+            opacity: 0.18;
+
+            pointer-events: none;
+
+        }
+
+        .shape-one {
+
+            width: 280px;
+
+            height: 280px;
+
+            background: #60a5fa;
+
+            top: -100px;
+
+            left: -80px;
+
+            animation: moveOne 10s ease-in-out infinite alternate;
+
+        }
+
+        .shape-two {
+
+            width: 220px;
+
+            height: 220px;
+
+            background: #a78bfa;
+
+            bottom: -70px;
+
+            right: -50px;
+
+            animation: moveTwo 12s ease-in-out infinite alternate;
+
+        }
+
+        .shape-three {
+
+            width: 100px;
+
+            height: 100px;
+
+            background: #38bdf8;
+
+            top: 25%;
+
+            right: 15%;
+
+            animation: floating 5s ease-in-out infinite;
+
+        }
+
+
+        /* =========================================
+           MAIN WRAPPER
+        ========================================= */
+
+        .login-wrapper {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            padding: 30px;
+
+            position: relative;
+
+            z-index: 5;
+
+        }
+
+
+        /* =========================================
+           LOGIN CONTAINER
+        ========================================= */
+
+        .login-container {
+
+            min-height: 620px;
+
+            display: flex;
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            background: rgba(255,255,255,0.96);
+
+            box-shadow:
+                    0 30px 80px rgba(0,0,0,0.35);
+
+            animation: cardAppear 0.8s ease;
+
+        }
+
+
+        /* =========================================
+           LEFT SIDE
+        ========================================= */
+
+        .login-left {
+
+            width: 48%;
+
+            position: relative;
+
+            padding: 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            color: white;
+
+            background:
+                    radial-gradient(
+                            circle at 20% 20%,
+                            rgba(96,165,250,0.35),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            145deg,
+                            #1d4ed8,
+                            #4338ca
+                    );
+
+        }
+
+        .login-left::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+
+            height: 280px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            right: -100px;
+
+            top: -80px;
+
+        }
+
+        .login-left::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            left: -80px;
+
+            bottom: -70px;
+
+        }
+
+
+        /* =========================================
+           BRAND
+        ========================================= */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 55px;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .brand-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,0.15);
+
+            backdrop-filter: blur(10px);
+
+            font-size: 23px;
+
+        }
+
+        .brand-name {
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =========================================
+           LEFT CONTENT
+        ========================================= */
+
+        .left-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .left-content h1 {
+
+            font-size: 42px;
+
+            font-weight: 800;
+
+            line-height: 1.15;
+
+            letter-spacing: -1.5px;
+
+        }
+
+        .left-content p {
+
+            margin-top: 20px;
+
+            color: rgba(255,255,255,0.75);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            max-width: 410px;
+
+        }
+
+
+        /* =========================================
+           BENEFITS
+        ========================================= */
+
+        .benefits {
+
+            margin-top: 35px;
+
+        }
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+
+            color: rgba(255,255,255,0.9);
+
+            font-size: 14px;
+
+        }
+
+        .benefit-icon {
+
+            width: 30px;
+
+            height: 30px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,0.12);
+
+            color: #bfdbfe;
+
+        }
+
+
+        /* =========================================
+           BOOK ILLUSTRATION
+        ========================================= */
+
+        .book-illustration {
+
+            position: absolute;
+
+            right: 35px;
+
+            bottom: 25px;
+
+            width: 150px;
+
+            height: 180px;
+
+            transform: rotate(-7deg);
+
+            opacity: 0.75;
+
+            animation: floating 5s ease-in-out infinite;
+
+        }
+
+        .book-cover {
+
+            width: 120px;
+
+            height: 155px;
+
+            border-radius: 5px 14px 14px 5px;
+
+            background: linear-gradient(
+                    135deg,
+                    #60a5fa,
+                    #818cf8
+            );
+
+            box-shadow:
+                    15px 20px 30px rgba(0,0,0,0.25);
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 10px;
+
+        }
+
+        .book-cover::before {
+
+            content: "CAMPUS";
+
+            position: absolute;
+
+            top: 50px;
+
+            left: 20px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            color: white;
+
+        }
+
+        .book-cover::after {
+
+            content: "SHELF";
+
+            position: absolute;
+
+            top: 70px;
+
+            left: 20px;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            color: rgba(255,255,255,0.75);
+
+        }
+
+
+        /* =========================================
+           RIGHT SIDE
+        ========================================= */
+
+        .login-right {
+
+            width: 52%;
+
+            padding: 65px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        .login-form {
+
+            width: 100%;
+
+            max-width: 410px;
+
+        }
+
+
+        /* =========================================
+           LOGIN HEADER
+        ========================================= */
+
+        .login-header {
+
+            margin-bottom: 35px;
+
+        }
+
+        .login-header h2 {
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 10px;
+
+        }
+
+        .login-header p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin: 0;
+
+        }
+
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .error-alert {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            background: #fef2f2;
+
+            border: 1px solid #fecaca;
+
+            color: #b91c1c;
+
+            font-size: 13px;
+
+            margin-bottom: 22px;
+
+            animation: shake 0.4s ease;
+
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-group {
+
+            margin-bottom: 22px;
+
+        }
+
+        .form-label {
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 17px;
+
+            pointer-events: none;
+
+        }
+
+        .form-control {
+
+            height: 52px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e2e8f0;
+
+            padding-left: 45px;
+
+            padding-right: 45px;
+
+            font-size: 14px;
+
+            transition: all 0.3s ease;
+
+            box-shadow: none;
+
+        }
+
+        .form-control:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                    0 0 0 4px rgba(59,130,246,0.10);
+
+        }
+
+        .form-control::placeholder {
+
+            color: #a1aab8;
+
+        }
+
+
+        /* =========================================
+           PASSWORD BUTTON
+        ========================================= */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+        }
+
+        .password-toggle:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        /* =========================================
+           LOGIN BUTTON
+        ========================================= */
+
+        .login-btn {
+
+            width: 100%;
+
+            height: 52px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+            );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            transition: all 0.3s ease;
+
+            box-shadow:
+                    0 10px 20px rgba(37,99,235,0.20);
+
+        }
+
+        .login-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 14px 25px rgba(37,99,235,0.30);
+
+        }
+
+        .login-btn:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        /* =========================================
+           REGISTER
+        ========================================= */
+
+        .register-box {
+
+            margin-top: 25px;
+
+            padding-top: 22px;
+
+            border-top: 1px solid #e2e8f0;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            color: #64748b;
+
+        }
+
+        .register-box a {
+
+            color: #2563eb;
+
+            font-weight: 700;
+
+        }
+
+        .register-box a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================================
+           HOME LINK
+        ========================================= */
+
+        .home-link {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 22px;
+
+        }
+
+        .home-link a {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            transition: 0.3s;
+
+        }
+
+        .home-link a:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        /* =========================================
+           ANIMATIONS
+        ========================================= */
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(30px)
+                        scale(0.97);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0)
+                        scale(1);
+
+            }
+
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+
+                transform:
+                        translateY(0)
+                        rotate(-7deg);
+
+            }
+
+            50% {
+
+                transform:
+                        translateY(-12px)
+                        rotate(-4deg);
+
+            }
+
+        }
+
+        @keyframes moveOne {
+
+            from {
+
+                transform:
+                        translate(0,0);
+
+            }
+
+            to {
+
+                transform:
+                        translate(70px,40px);
+
+            }
+
+        }
+
+        @keyframes moveTwo {
+
+            from {
+
+                transform:
+                        translate(0,0);
+
+            }
+
+            to {
+
+                transform:
+                        translate(-50px,-40px);
+
+            }
+
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+
+                transform: translateX(0);
+
+            }
+
+            25% {
+
+                transform: translateX(-5px);
+
+            }
+
+            75% {
+
+                transform: translateX(5px);
+
+            }
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            body {
+
+                overflow-y: auto;
+
+            }
+
+            .login-wrapper {
+
+                padding: 20px;
+
+            }
+
+            .login-container {
+
+                flex-direction: column;
+
+            }
+
+            .login-left {
+
+                width: 100%;
+
+                padding: 40px;
+
+                min-height: 330px;
+
+            }
+
+            .login-right {
+
+                width: 100%;
+
+                padding: 45px;
+
+            }
+
+            .book-illustration {
+
+                display: none;
+
+            }
+
+            .brand {
+
+                margin-bottom: 25px;
+
+            }
+
+            .left-content h1 {
+
+                font-size: 34px;
+
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .login-wrapper {
+
+                padding: 12px;
+
+            }
+
+            .login-container {
+
+                border-radius: 20px;
+
+            }
+
+            .login-left {
+
+                padding: 30px;
+
+                min-height: 280px;
+
+            }
+
+            .login-right {
+
+                padding: 35px 25px;
+
+            }
+
+            .left-content h1 {
+
+                font-size: 29px;
+
+            }
+
+            .login-header h2 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Animated Background -->
+
+<div class="shape shape-one"></div>
+
+<div class="shape shape-two"></div>
+
+<div class="shape shape-three"></div>
+
+
+<div class="login-wrapper">
+
+    <div class="login-container">
+
+
+        <!-- =========================================
+             LEFT
+        ========================================= -->
+
+        <div class="login-left">
+
+
+            <!-- Brand -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+
+                    <i class="bi bi-book-half"></i>
+
+                </div>
+
+                <div class="brand-name">
+
+                    CampusShelf
+
+                </div>
+
+            </div>
+
+
+            <!-- Content -->
+
+            <div class="left-content">
+
+                <h1>
+
+                    Welcome
+                    <br>
+
+                    <span style="color:#bfdbfe;">
+                        Back, Student!
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Access your academic resources,
+                    discover useful books and share
+                    knowledge with your college community.
+
+                </p>
+
+
+                <div class="benefits">
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+                        Browse college books
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-file-earmark-text"></i>
+
+                        </div>
+
+                        Access study materials
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        Share with other students
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- Book -->
+
+            <div class="book-illustration">
+
+                <div class="book-cover"></div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =========================================
+             RIGHT
+        ========================================= -->
+
+        <div class="login-right">
+
+
+            <div class="login-form">
+
+
+                <!-- Header -->
+
+                <div class="login-header">
+
+                    <h2>
+                        Student Login
+                    </h2>
+
+                    <p>
+
+                        Sign in to continue to your
+                        CampusShelf account.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Error -->
+
+                <div th:if="${error}"
+                     class="error-alert">
+
+                    <i class="bi bi-exclamation-circle-fill"></i>
+
+                    <span th:text="${error}">
+                    </span>
+
+                </div>
+
+
+                <!-- Form -->
+
+                <form th:action="@{/students/login}"
+                      method="post">
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+
+                            Email Address
+
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <i class="bi bi-envelope input-icon"></i>
+
+
+                            <input type="email"
+                                   name="email"
+                                   class="form-control"
+                                   placeholder="Enter your email"
+                                   autocomplete="email"
+                                   required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+
+                            Password
+
+                        </label>
+
+
+                        <div class="input-wrapper">
+
+                            <i class="bi bi-lock input-icon"></i>
+
+
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   class="form-control"
+                                   placeholder="Enter your password"
+                                   autocomplete="current-password"
+                                   required>
+
+
+                            <button type="button"
+                                    class="password-toggle"
+                                    onclick="togglePassword()">
+
+                                <i class="bi bi-eye"
+                                   id="passwordIcon"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Login -->
+
+                    <button type="submit"
+                            class="login-btn">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Sign In
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- Register -->
+
+                <div class="register-box">
+
+                    Don't have a CampusShelf account?
+
+                    <a th:href="@{/students/register}">
+
+                        Create Account
+
+                    </a>
+
+                </div>
+
+
+                <!-- Home -->
+
+                <div class="home-link">
+
+                    <a th:href="@{/}">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Back to Home
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const icon =
+            document.getElementById("passwordIcon");
+
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            icon.classList.remove("bi-eye");
+
+            icon.classList.add("bi-eye-slash");
+
+        } else {
+
+            password.type = "password";
+
+            icon.classList.remove("bi-eye-slash");
+
+            icon.classList.add("bi-eye");
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

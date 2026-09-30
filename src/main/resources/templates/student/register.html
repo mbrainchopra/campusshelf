@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Student Registration - CampusShelf">
+
+    <title>Create Account | CampusShelf</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <!-- Google Font -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family: 'Inter', sans-serif;
+
+            background:
+                    radial-gradient(
+                            circle at 10% 20%,
+                            rgba(59,130,246,0.35),
+                            transparent 30%
+                    ),
+                    radial-gradient(
+                            circle at 90% 80%,
+                            rgba(99,102,241,0.30),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            135deg,
+                            #07152f,
+                            #0d2a5b,
+                            #172554
+                    );
+
+            color: #172033;
+
+            padding: 30px;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* =========================================
+           BACKGROUND SHAPES
+        ========================================= */
+
+        .shape {
+
+            position: fixed;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            opacity: 0.16;
+
+            z-index: 0;
+
+        }
+
+        .shape-one {
+
+            width: 280px;
+
+            height: 280px;
+
+            background: #60a5fa;
+
+            top: -100px;
+
+            left: -80px;
+
+            animation: moveOne 10s ease-in-out infinite alternate;
+
+        }
+
+        .shape-two {
+
+            width: 240px;
+
+            height: 240px;
+
+            background: #a78bfa;
+
+            right: -80px;
+
+            bottom: -80px;
+
+            animation: moveTwo 12s ease-in-out infinite alternate;
+
+        }
+
+        .shape-three {
+
+            width: 90px;
+
+            height: 90px;
+
+            background: #38bdf8;
+
+            right: 15%;
+
+            top: 18%;
+
+            animation: floating 5s ease-in-out infinite;
+
+        }
+
+
+        /* =========================================
+           WRAPPER
+        ========================================= */
+
+        .register-wrapper {
+
+            width: 100%;
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        /* =========================================
+           MAIN CARD
+        ========================================= */
+
+        .register-container {
+
+            display: flex;
+
+            min-height: 680px;
+
+            background: rgba(255,255,255,0.97);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            box-shadow:
+                    0 30px 80px rgba(0,0,0,0.35);
+
+            animation: cardAppear 0.8s ease;
+
+        }
+
+
+        /* =========================================
+           LEFT SIDE
+        ========================================= */
+
+        .register-left {
+
+            width: 42%;
+
+            padding: 55px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background:
+                    radial-gradient(
+                            circle at 20% 15%,
+                            rgba(96,165,250,0.35),
+                            transparent 30%
+                    ),
+                    linear-gradient(
+                            145deg,
+                            #1d4ed8,
+                            #4338ca
+                    );
+
+        }
+
+        .register-left::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            right: -120px;
+
+            top: -100px;
+
+        }
+
+        .register-left::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+
+            height: 190px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            left: -90px;
+
+            bottom: -80px;
+
+        }
+
+
+        /* =========================================
+           BRAND
+        ========================================= */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 55px;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .brand-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,0.15);
+
+            backdrop-filter: blur(10px);
+
+            font-size: 23px;
+
+        }
+
+        .brand-name {
+
+            font-size: 22px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =========================================
+           LEFT CONTENT
+        ========================================= */
+
+        .left-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+        .left-content h1 {
+
+            font-size: 42px;
+
+            font-weight: 800;
+
+            line-height: 1.15;
+
+            letter-spacing: -1.5px;
+
+        }
+
+        .left-content p {
+
+            margin-top: 20px;
+
+            color: rgba(255,255,255,0.75);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            max-width: 400px;
+
+        }
+
+
+        /* =========================================
+           BENEFITS
+        ========================================= */
+
+        .benefits {
+
+            margin-top: 35px;
+
+        }
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+
+            color: rgba(255,255,255,0.9);
+
+            font-size: 14px;
+
+        }
+
+        .benefit-icon {
+
+            width: 31px;
+
+            height: 31px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,0.12);
+
+            color: #bfdbfe;
+
+        }
+
+
+        /* =========================================
+           RIGHT SIDE
+        ========================================= */
+
+        .register-right {
+
+            width: 58%;
+
+            padding: 50px 60px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        .register-form {
+
+            width: 100%;
+
+            max-width: 540px;
+
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .register-header {
+
+            margin-bottom: 28px;
+
+        }
+
+        .register-header h2 {
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 8px;
+
+        }
+
+        .register-header p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin: 0;
+
+        }
+
+
+        /* =========================================
+           SUCCESS MESSAGE
+        ========================================= */
+
+        .success-alert {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+
+            color: #15803d;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+
+            animation: fadeDown 0.5s ease;
+
+        }
+
+
+        /* =========================================
+           FORM GRID
+        ========================================= */
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+        .form-label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* =========================================
+           INPUT
+        ========================================= */
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #94a3b8;
+
+            font-size: 16px;
+
+            pointer-events: none;
+
+            z-index: 2;
+
+        }
+
+        .form-control,
+        .form-select {
+
+            height: 50px;
+
+            border-radius: 11px;
+
+            border: 1px solid #e2e8f0;
+
+            font-size: 13px;
+
+            box-shadow: none;
+
+            transition: all 0.3s ease;
+
+        }
+
+        .form-control {
+
+            padding-left: 43px;
+
+            padding-right: 42px;
+
+        }
+
+        .form-select {
+
+            padding-left: 42px;
+
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                    0 0 0 4px rgba(59,130,246,0.10);
+
+        }
+
+
+        /* =========================================
+           PASSWORD
+        ========================================= */
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 13px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            z-index: 3;
+
+        }
+
+        .password-toggle:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        /* =========================================
+           PASSWORD STRENGTH
+        ========================================= */
+
+        .strength-container {
+
+            margin-top: 8px;
+
+        }
+
+        .strength-bar {
+
+            height: 4px;
+
+            border-radius: 10px;
+
+            background: #e2e8f0;
+
+            overflow: hidden;
+
+        }
+
+        .strength-progress {
+
+            height: 100%;
+
+            width: 0;
+
+            border-radius: 10px;
+
+            transition: all 0.3s ease;
+
+        }
+
+        .strength-text {
+
+            font-size: 11px;
+
+            margin-top: 5px;
+
+            color: #94a3b8;
+
+        }
+
+
+        /* =========================================
+           REGISTER BUTTON
+        ========================================= */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 51px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            #2563eb,
+                            #4f46e5
+                    );
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            transition: all 0.3s ease;
+
+            box-shadow:
+                    0 10px 20px rgba(37,99,235,0.20);
+
+            margin-top: 8px;
+
+        }
+
+        .register-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                    0 14px 25px rgba(37,99,235,0.30);
+
+        }
+
+
+        /* =========================================
+           LOGIN LINK
+        ========================================= */
+
+        .login-box {
+
+            margin-top: 22px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e2e8f0;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+        .login-box a {
+
+            color: #2563eb;
+
+            font-weight: 700;
+
+        }
+
+        .login-box a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================================
+           HOME LINK
+        ========================================= */
+
+        .home-link {
+
+            display: flex;
+
+            justify-content: center;
+
+            margin-top: 17px;
+
+        }
+
+        .home-link a {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            transition: 0.3s;
+
+        }
+
+        .home-link a:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        /* =========================================
+           ANIMATIONS
+        ========================================= */
+
+        @keyframes cardAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                        translateY(30px)
+                        scale(0.97);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                        translateY(0)
+                        scale(1);
+
+            }
+
+        }
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(-10px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+
+                transform: translateY(0);
+
+            }
+
+            50% {
+
+                transform: translateY(-12px);
+
+            }
+
+        }
+
+        @keyframes moveOne {
+
+            from {
+
+                transform: translate(0,0);
+
+            }
+
+            to {
+
+                transform: translate(70px,40px);
+
+            }
+
+        }
+
+        @keyframes moveTwo {
+
+            from {
+
+                transform: translate(0,0);
+
+            }
+
+            to {
+
+                transform: translate(-50px,-40px);
+
+            }
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 950px) {
+
+            .register-container {
+
+                flex-direction: column;
+
+            }
+
+            .register-left {
+
+                width: 100%;
+
+                min-height: 330px;
+
+                padding: 40px;
+
+            }
+
+            .register-right {
+
+                width: 100%;
+
+                padding: 45px;
+
+            }
+
+            .brand {
+
+                margin-bottom: 25px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 12px;
+
+                overflow-y: auto;
+
+            }
+
+            .register-container {
+
+                border-radius: 20px;
+
+            }
+
+            .register-left {
+
+                padding: 30px;
+
+                min-height: 280px;
+
+            }
+
+            .register-right {
+
+                padding: 35px 22px;
+
+            }
+
+            .left-content h1 {
+
+                font-size: 29px;
+
+            }
+
+            .register-header h2 {
+
+                font-size: 27px;
+
+            }
+
+            .form-row {
+
+                grid-template-columns: 1fr;
+
+                gap: 0;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Animated Background -->
+
+<div class="shape shape-one"></div>
+
+<div class="shape shape-two"></div>
+
+<div class="shape shape-three"></div>
+
+
+<div class="register-wrapper">
+
+
+    <div class="register-container">
+
+
+        <!-- =========================================
+             LEFT SIDE
+        ========================================= -->
+
+        <div class="register-left">
+
+
+            <!-- Brand -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+
+                    <i class="bi bi-book-half"></i>
+
+                </div>
+
+                <div class="brand-name">
+
+                    CampusShelf
+
+                </div>
+
+            </div>
+
+
+            <!-- Content -->
+
+            <div class="left-content">
+
+                <h1>
+
+                    Start Your
+                    <br>
+
+                    <span style="color:#bfdbfe;">
+                        Campus Journey.
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    Create your CampusShelf account and
+                    connect with students who share the
+                    same passion for learning.
+
+                </p>
+
+
+                <div class="benefits">
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-book"></i>
+
+                        </div>
+
+                        Discover useful college books
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-file-earmark-text"></i>
+
+                        </div>
+
+                        Access academic materials
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-cloud-arrow-up"></i>
+
+                        </div>
+
+                        Share your own resources
+
+                    </div>
+
+
+                    <div class="benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        Help other students learn
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             RIGHT SIDE
+        ========================================= -->
+
+        <div class="register-right">
+
+
+            <div class="register-form">
+
+
+                <!-- Header -->
+
+                <div class="register-header">
+
+                    <h2>
+                        Create Account
+                    </h2>
+
+                    <p>
+
+                        Register as a student to get started
+                        with CampusShelf.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Success Message -->
+
+                <div th:if="${message}"
+                     class="success-alert">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    <span th:text="${message}">
+                    </span>
+
+                </div>
+
+
+                <!-- Registration Form -->
+
+                <form th:action="@{/students/register}"
+                      th:object="${student}"
+                      method="post"
+                      onsubmit="return validateRegistration()">
+
+
+                    <!-- Name + Email -->
+
+                    <div class="form-row">
+
+
+                        <!-- Name -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Full Name
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-person input-icon"></i>
+
+                                <input type="text"
+                                       th:field="*{name}"
+                                       class="form-control"
+                                       placeholder="Your full name"
+                                       minlength="3"
+                                       required>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Email Address
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-envelope input-icon"></i>
+
+                                <input type="email"
+                                       th:field="*{email}"
+                                       class="form-control"
+                                       placeholder="you@example.com"
+                                       autocomplete="email"
+                                       required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password + Phone -->
+
+                    <div class="form-row">
+
+
+                        <!-- Password -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Password
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-lock input-icon"></i>
+
+                                <input type="password"
+                                       th:field="*{password}"
+                                       id="password"
+                                       class="form-control"
+                                       placeholder="Create password"
+                                       minlength="6"
+                                       required
+                                       oninput="checkPasswordStrength()">
+
+                                <button type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword()">
+
+                                    <i class="bi bi-eye"
+                                       id="passwordIcon"></i>
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="strength-container">
+
+                                <div class="strength-bar">
+
+                                    <div class="strength-progress"
+                                         id="strengthProgress">
+                                    </div>
+
+                                </div>
+
+                                <div class="strength-text"
+                                     id="strengthText">
+
+                                    Use at least 6 characters
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Phone -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Phone Number
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-telephone input-icon"></i>
+
+                                <input type="tel"
+                                       th:field="*{phone}"
+                                       class="form-control"
+                                       placeholder="10 digit number"
+                                       pattern="[0-9]{10}"
+                                       maxlength="10"
+                                       required>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Department + Year -->
+
+                    <div class="form-row">
+
+
+                        <!-- Department -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Department
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-building input-icon"></i>
+
+                                <select th:field="*{department}"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        Select Department
+                                    </option>
+
+                                    <option value="CSE">
+                                        Computer Science
+                                    </option>
+
+                                    <option value="IT">
+                                        Information Technology
+                                    </option>
+
+                                    <option value="ECE">
+                                        Electronics & Communication
+                                    </option>
+
+                                    <option value="EEE">
+                                        Electrical & Electronics
+                                    </option>
+
+                                    <option value="MECH">
+                                        Mechanical
+                                    </option>
+
+                                    <option value="CIVIL">
+                                        Civil
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Year -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+
+                                Academic Year
+
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-mortarboard input-icon"></i>
+
+                                <select th:field="*{year}"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        Select Year
+                                    </option>
+
+                                    <option value="1st Year">
+                                        1st Year
+                                    </option>
+
+                                    <option value="2nd Year">
+                                        2nd Year
+                                    </option>
+
+                                    <option value="3rd Year">
+                                        3rd Year
+                                    </option>
+
+                                    <option value="4th Year">
+                                        4th Year
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Register -->
+
+                    <button type="submit"
+                            class="register-btn">
+
+                        <i class="bi bi-person-plus"></i>
+
+                        Create Account
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+
+                </form>
+
+
+                <!-- Login -->
+
+                <div class="login-box">
+
+                    Already have an account?
+
+                    <a th:href="@{/students/login}">
+
+                        Sign In
+
+                    </a>
+
+                </div>
+
+
+                <!-- Home -->
+
+                <div class="home-link">
+
+                    <a th:href="@{/}">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Back to Home
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+    /* =========================================
+       PASSWORD VISIBILITY
+    ========================================= */
+
+    function togglePassword() {
+
+        const password =
+            document.getElementById("password");
+
+        const icon =
+            document.getElementById("passwordIcon");
+
+
+        if (password.type === "password") {
+
+            password.type = "text";
+
+            icon.classList.remove("bi-eye");
+
+            icon.classList.add("bi-eye-slash");
+
+        } else {
+
+            password.type = "password";
+
+            icon.classList.remove("bi-eye-slash");
+
+            icon.classList.add("bi-eye");
+
+        }
+
+    }
+
+
+    /* =========================================
+       PASSWORD STRENGTH
+    ========================================= */
+
+    function checkPasswordStrength() {
+
+        const password =
+            document.getElementById("password").value;
+
+        const progress =
+            document.getElementById("strengthProgress");
+
+        const text =
+            document.getElementById("strengthText");
+
+
+        let strength = 0;
+
+
+        if (password.length >= 6) {
+            strength++;
+        }
+
+        if (password.length >= 8) {
+            strength++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            strength++;
+        }
+
+        if (/[0-9]/.test(password)) {
+            strength++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            strength++;
+        }
+
+
+        if (password.length === 0) {
+
+            progress.style.width = "0";
+
+            text.innerText =
+                "Use at least 6 characters";
+
+            text.style.color = "#94a3b8";
+
+            return;
+
+        }
+
+
+        if (strength <= 2) {
+
+            progress.style.width = "35%";
+
+            progress.style.background = "#ef4444";
+
+            text.innerText =
+                "Weak password";
+
+            text.style.color = "#ef4444";
+
+        }
+
+        else if (strength <= 3) {
+
+            progress.style.width = "65%";
+
+            progress.style.background = "#f59e0b";
+
+            text.innerText =
+                "Medium password";
+
+            text.style.color = "#d97706";
+
+        }
+
+        else {
+
+            progress.style.width = "100%";
+
+            progress.style.background = "#22c55e";
+
+            text.innerText =
+                "Strong password";
+
+            text.style.color = "#16a34a";
+
+        }
+
+    }
+
+
+    /* =========================================
+       VALIDATION
+    ========================================= */
+
+    function validateRegistration() {
+
+        const password =
+            document.getElementById("password").value;
+
+
+        if (password.length < 6) {
+
+            alert(
+                "Password must contain at least 6 characters."
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
